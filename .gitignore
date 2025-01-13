@@ -1,0 +1,7 @@
+xcuserdata/
+Pods/
+.DS_Store
+.env
+.env.*
+/tmp
+build/
