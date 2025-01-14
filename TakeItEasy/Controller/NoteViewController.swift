@@ -2,7 +2,7 @@
 //  NoteViewController.swift
 //  TakeItEasy
 //
-//  Created by squiggly on 1/13/25.
+//  Created by Saul on 1/13/25.
 //
 
 import UIKit
