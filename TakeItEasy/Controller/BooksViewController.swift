@@ -9,6 +9,8 @@ import UIKit
 
 class BooksViewController: UIViewController {
 
+    var booksList = ["1"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,4 +28,25 @@ class BooksViewController: UIViewController {
     }
     */
 
+}
+
+extension BooksViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return booksList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 128, height: 128)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        //let bookCell =
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookcell", for: indexPath) as! BookCollectionViewCell
+        cell.bookTitleLabel?.text = "testing"
+        return cell
+    }
+    
+    
 }
