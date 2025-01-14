@@ -9,6 +9,10 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var password: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,5 +29,12 @@ class LoginViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    @IBAction func login(_ sender: Any) {
+        
+        
+        self.performSegue(withIdentifier: "loginSegue", sender: nil)
+    }
+    
 
+    
 }
