@@ -9,9 +9,14 @@ import UIKit
 
 class RegistrationViewController: UIViewController {
 
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var confirmPassword: UITextField!
+    @IBOutlet weak var errorLabel: UILabel!
+    var emailText : String?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        email.text = emailText
         // Do any additional setup after loading the view.
     }
     
@@ -25,5 +30,15 @@ class RegistrationViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @IBAction func register(_ sender: Any) {
+        
+        
+        
+        print("User created, data saved successfully")
+        self.navigationController?.popViewController(animated: true)
+        self.performSegue(withIdentifier: "tabSegue", sender: nil)
+    }
+    
 
 }
