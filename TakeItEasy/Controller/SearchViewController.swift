@@ -6,24 +6,29 @@
 //
 
 import UIKit
+import WebKit
 
 class SearchViewController: UIViewController {
-
+    
+    @IBOutlet weak var viewContainer: UIView!
+    var webView: WKWebView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        createBrowser()
     }
     
+    
+    func createBrowser() {
+        webView = WKWebView()
+        
+        let url = URL(string: "https://www.google.com")
+        webView.load(URLRequest(url: url!))
+        
+        webView.frame = viewContainer.bounds
+        viewContainer.addSubview(webView)
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
 
 }
