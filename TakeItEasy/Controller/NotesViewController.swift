@@ -20,7 +20,6 @@ class NotesViewController: UIViewController{
         setupUI()
         // Do any additional setup after loading the view.
         notesList = DBHelper.dbhelper.fetchAllNotesByAccount(account_id: 1)
-        
     }
     
     func setupUI(){
@@ -41,19 +40,19 @@ class NotesViewController: UIViewController{
 extension NotesViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notesList.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            DBHelper.dbhelper.deleteNote(id: notesList[indexPath.row].id!)
-            notesList.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            DBHelper.dbhelper.deleteNote(id: notesList[indexPath.section].id!)
+            notesList.remove(at: indexPath.section)
+            tableView.deleteSections([indexPath.section], with: .fade)
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        return notesList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
