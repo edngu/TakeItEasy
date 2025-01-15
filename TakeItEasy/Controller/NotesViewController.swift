@@ -11,30 +11,30 @@ class NotesViewController: UIViewController{
 
     
     @IBOutlet weak var viewForTable: UIView!
+    @IBOutlet weak var tableView: UITableView!
+    
+    var notesList : [Note] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         // Do any additional setup after loading the view.
-        
+        notesList = DBHelper.dbhelper.fetchAllNotesByAccount(account_id: 1)
     }
-    
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     func setupUI(){
         viewForTable.layer.cornerRadius = CGRectGetWidth(viewForTable.frame) / 10
         
     }
 
+    @IBAction func addNewNote(_ sender: Any) {
+        let note = DBHelper.dbhelper.insertNote(accountID: 1)
+        if note != nil {
+            notesList.insert(note!, at: 0)
+            tableView.reloadData()
+        }
+    }
+    
 }
 
 extension NotesViewController: UITableViewDataSource, UITableViewDelegate{
@@ -43,8 +43,16 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate{
         return 1
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            DBHelper.dbhelper.deleteNote(id: notesList[indexPath.section].id!)
+            notesList.remove(at: indexPath.section)
+            tableView.deleteSections([indexPath.section], with: .fade)
+        }
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        return notesList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

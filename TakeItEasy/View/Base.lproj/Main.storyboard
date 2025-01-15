@@ -297,8 +297,19 @@
                                     <outlet property="delegate" destination="dEw-Yj-OI1" id="Ajh-Ve-JWG"/>
                                 </connections>
                             </searchBar>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z5q-WS-HCz">
-                                <rect key="frame" x="0.0" y="189" width="393" height="580"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SGQ-1u-aeC">
+                                <rect key="frame" x="302" y="146" width="75" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                                <connections>
+                                    <action selector="addNewNote:" destination="dEw-Yj-OI1" eventType="touchUpInside" id="JSk-Jd-fex"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z5q-WS-HCz">
+                                <rect key="frame" x="16" y="189" width="361" height="580"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mlY-l3-q63">
                                         <rect key="frame" x="5" y="8" width="383" height="567"/>
@@ -359,6 +370,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Notes" id="nrk-y4-bez"/>
                     <connections>
+                        <outlet property="tableView" destination="mlY-l3-q63" id="Mdy-Ma-3xK"/>
                         <outlet property="viewForTable" destination="Z5q-WS-HCz" id="J28-VR-imh"/>
                         <segue destination="hKi-n9-Lse" kind="show" identifier="noteSegue" id="01Y-g7-wZ4"/>
                     </connections>
