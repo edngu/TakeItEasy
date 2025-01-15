@@ -75,7 +75,8 @@ class RegistrationViewController: UIViewController {
             return AccountValidationResponse.passwordNoNumber
         }
         
-        guard pwd.lowercased() != pwd else {
+        let capitalCharacters = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        guard let _ = pwd.rangeOfCharacter(from: capitalCharacters) else {
             return AccountValidationResponse.passwordNoCapital
         }
         
