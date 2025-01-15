@@ -176,37 +176,107 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eMT-BI-WhV">
-                                <rect key="frame" x="16" y="224" width="361" height="160"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.21176470589999999" green="0.1137254902" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Sm5-4c-K43">
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TdK-8b-cIb">
+                                <rect key="frame" x="0.0" y="103" width="393" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Y87-2S-LeX" id="n7L-MK-N0h"/>
+                                </connections>
+                            </searchBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8IQ-FK-36f">
+                                <rect key="frame" x="0.0" y="212" width="393" height="128"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="dYM-QZ-CDF">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="QuizCell" id="ns6-5Q-yyC" userLabel="Quiz Collection Cell" customClass="QuizCollectionViewCell" customModule="TakeItEasy" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="16" width="128" height="128"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="quizCell" id="0HU-fh-vrh" customClass="QuizCollectionViewCell" customModule="TakeItEasy" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="5G9-kZ-TsI">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PGl-FW-T3B">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5kj-Q7-cuY">
+                                                    <rect key="frame" x="0.0" y="85" width="128" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="titleBackDropView"/>
+                                                </view>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sui-oe-MaH">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quiz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKj-AF-EAM">
+                                                    <rect key="frame" x="5" y="96" width="35" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" systemColor="systemBackgroundColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="tableCellBlueTextColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="bKj-AF-EAM" secondAttribute="bottom" constant="11" id="8gd-s1-ddG"/>
+                                                <constraint firstItem="bKj-AF-EAM" firstAttribute="top" secondItem="PGl-FW-T3B" secondAttribute="top" constant="96" id="PS0-kb-bkX"/>
+                                                <constraint firstItem="bKj-AF-EAM" firstAttribute="leading" secondItem="PGl-FW-T3B" secondAttribute="leading" constant="5" id="xbt-CO-9ng"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="quizBackDropView" destination="5kj-Q7-cuY" id="YJU-g4-Y50"/>
+                                            <outlet property="quizImage" destination="sui-oe-MaH" id="Wv4-5S-jmQ"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nMZ-80-yyB">
+                                        <rect key="frame" x="146" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="q3T-Gw-OOM">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" red="0.015686274510000001" green="0.44705882349999998" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="KTs-of-hSx">
+                                        <rect key="frame" x="284" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="YEi-lD-c8x">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
-                                    <outlet property="dataSource" destination="iDP-f3-oFp" id="wyb-Cb-eob"/>
-                                    <outlet property="delegate" destination="iDP-f3-oFp" id="bR4-NY-gYh"/>
+                                    <outlet property="dataSource" destination="iDP-f3-oFp" id="qN4-cb-773"/>
+                                    <outlet property="delegate" destination="iDP-f3-oFp" id="gIr-B3-YNT"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qwE-XD-gIC">
+                                <rect key="frame" x="-1" y="422" width="395" height="347"/>
+                                <color key="backgroundColor" red="0.21176470589999999" green="0.1137254902" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="backdropView"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sAf-4h-54h"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sAf-4h-54h" firstAttribute="bottom" secondItem="qwE-XD-gIC" secondAttribute="bottom" id="AM7-wd-QGf"/>
+                            <constraint firstItem="sAf-4h-54h" firstAttribute="bottom" secondItem="8IQ-FK-36f" secondAttribute="bottom" constant="429" id="Djf-yY-eOf"/>
+                            <constraint firstItem="sAf-4h-54h" firstAttribute="trailing" secondItem="qwE-XD-gIC" secondAttribute="trailing" constant="-1" id="JDm-WX-xkt"/>
+                            <constraint firstItem="8IQ-FK-36f" firstAttribute="top" secondItem="sAf-4h-54h" secondAttribute="top" constant="109" id="PdE-mp-dru"/>
+                            <constraint firstItem="8IQ-FK-36f" firstAttribute="centerX" secondItem="sAf-4h-54h" secondAttribute="centerX" id="diH-hV-rvD"/>
+                            <constraint firstItem="qwE-XD-gIC" firstAttribute="top" secondItem="sAf-4h-54h" secondAttribute="top" constant="319" id="eU6-jl-Y6G"/>
+                            <constraint firstItem="8IQ-FK-36f" firstAttribute="leading" secondItem="sAf-4h-54h" secondAttribute="leading" id="iNR-IV-3Z8"/>
+                            <constraint firstItem="qwE-XD-gIC" firstAttribute="leading" secondItem="sAf-4h-54h" secondAttribute="leading" constant="-1" id="vQX-7v-rNR"/>
+                            <constraint firstItem="8IQ-FK-36f" firstAttribute="trailing" secondItem="sAf-4h-54h" secondAttribute="trailing" id="xij-c7-1Uy"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Quiz" id="kJv-LJ-mA0"/>
+                    <connections>
+                        <outlet property="quizInfoBackdropView" destination="qwE-XD-gIC" id="3kA-HX-moK"/>
+                        <segue destination="UeZ-f4-C9r" kind="show" identifier="questionSegue" id="saC-RB-Y5g"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tUR-SY-3fD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -277,6 +347,7 @@
                     <tabBarItem key="tabBarItem" title="Notes" id="nrk-y4-bez"/>
                     <connections>
                         <outlet property="viewForTable" destination="Z5q-WS-HCz" id="J28-VR-imh"/>
+                        <segue destination="hKi-n9-Lse" kind="show" identifier="noteSegue" id="01Y-g7-wZ4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7NX-AH-xUa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -464,7 +535,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8pO-d1-0Vl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="195" y="1054"/>
+            <point key="canvasLocation" x="244" y="1054"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ZyA-XK-oFf">
@@ -504,14 +575,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C74-ka-1UA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2308" y="1054"/>
+            <point key="canvasLocation" x="2247" y="1054"/>
         </scene>
         <!--Results-->
         <scene sceneID="wgr-ae-97J">
             <objects>
                 <viewController title="Results" id="oez-0L-mrX" customClass="ResultsViewController" customModule="TakeItEasy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yGT-Ls-sIx">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="DqF-OZ-8Hr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -548,6 +619,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tableCellBlueTextColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
