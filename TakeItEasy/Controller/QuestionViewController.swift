@@ -9,10 +9,17 @@ import UIKit
 
 class QuestionViewController: UIViewController {
 
+    @IBOutlet weak var questionButton1: UIButton!
+    @IBOutlet weak var questionButton2: UIButton!
+    @IBOutlet weak var questionButton3: UIButton!
+    @IBOutlet weak var questionButton4: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        questionButton1.titleLabel?.text = "Question 1"
+        
+        
     }
     
 
