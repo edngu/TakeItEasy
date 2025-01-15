@@ -25,7 +25,7 @@ class NotesViewController: UIViewController{
     
     func setupUI(){
         viewForTable.layer.cornerRadius = CGRectGetWidth(viewForTable.frame) / 10
-        viewForTable.backgroundColor = .blue
+        
     }
 
     @IBAction func addNewNote(_ sender: Any) {
@@ -52,9 +52,19 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate{
         }
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 10
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notesCell", for: indexPath) as! NotesTableViewCell
         cell.textLabel?.text = "Notes"
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.performSegue(withIdentifier: "noteSegue", sender: nil)
+        
     }
 }
