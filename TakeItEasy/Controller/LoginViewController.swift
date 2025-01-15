@@ -17,6 +17,9 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        DBHelper.dbhelper.createDatabase()
+        DBHelper.dbhelper.createAccountTable()
     }
     
 
