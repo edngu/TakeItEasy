@@ -9,12 +9,14 @@ import Foundation
 
 class Account {
     
+    var id : Int32?
     var email : String?
     var password : String?
     var points : Int?
     var time_account_created : Date?
     
-    init(email: String? = nil, password: String? = nil, points: Int? = nil, time_account_created: Date? = nil) {
+    init(id: Int32? = nil, email: String? = nil, password: String? = nil, points: Int? = nil, time_account_created: Date? = nil) {
+        self.id = id
         self.email = email
         self.password = password
         self.points = points
