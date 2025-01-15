@@ -9,4 +9,7 @@ import UIKit
 
 class QuizCollectionViewCell: UICollectionViewCell {
     
+    
+    @IBOutlet weak var quizImage: UIImageView!
+    @IBOutlet weak var quizBackDropView: UIView!
 }
