@@ -13,14 +13,14 @@ class Account {
     var email : String?
     var password : String?
     var points : Int?
-    var time_account_created : Date?
+    var timeAccountCreated : Date?
     
-    init(id: Int32? = nil, email: String? = nil, password: String? = nil, points: Int? = nil, time_account_created: Date? = nil) {
+    init(id: Int32? = nil, email: String? = nil, password: String? = nil, points: Int? = nil, timeAccountCreated: Date? = nil) {
         self.id = id
         self.email = email
         self.password = password
         self.points = points
-        self.time_account_created = time_account_created
+        self.timeAccountCreated = timeAccountCreated
     }
     
 }
