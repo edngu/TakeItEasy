@@ -56,8 +56,10 @@ class RegistrationViewController: UIViewController {
             return AccountValidationResponse.invalidUsernameFormat
         }
         
-        // Add check if account exists
-        
+        let acc = DBHelper.dbhelper.fetchAccountByEmail(email: user as NSString)
+        guard acc == nil else {
+            return AccountValidationResponse.usernameInUse
+        }
         
         /// Verify the password
         
@@ -92,7 +94,7 @@ class RegistrationViewController: UIViewController {
     
     @IBAction func register(_ sender: Any) {
         
-        let validationResponse = validateAccount(user: email.text!, pwd: password.text!, pwd2: confirmPassword.text!)
+        let validationResponse = validateAccount(user: email.text!.lowercased(), pwd: password.text!, pwd2: confirmPassword.text!)
         
         errorLabel.isHidden = false
         errorLabel.text = validationResponse.rawValue
@@ -101,10 +103,13 @@ class RegistrationViewController: UIViewController {
             return
         }
         
-        // store/save account
-        
+        DBHelper.dbhelper.insertAccount(email: email.text!.lowercased() as NSString, password: password.text! as NSString)
         
         print("User created, data saved successfully")
+        /*let p = DBHelper.dbhelper.fetchAllAccounts()
+        for a in p {
+            print("\(a.email), \(a.password), \(a.points), \(a.time_account_created)")
+        }*/
         self.navigationController?.popViewController(animated: true)
         self.performSegue(withIdentifier: "tabSegue", sender: nil)
          
