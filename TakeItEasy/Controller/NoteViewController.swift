@@ -9,9 +9,14 @@ import UIKit
 
 class NoteViewController: UIViewController {
 
+
+    @IBOutlet weak var titleBackdropView: UIView!
+    @IBOutlet weak var textBackdropView: UIView!
+    @IBOutlet weak var noteName: UITextField!
+    @IBOutlet weak var text: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupUI()
         // Do any additional setup after loading the view.
     }
     
@@ -25,5 +30,13 @@ class NoteViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func setupUI(){
+        noteName.layer.cornerRadius = 20
+        text.layer.cornerRadius = 20
+        titleBackdropView.layer.cornerRadius = 20
+        textBackdropView.layer.cornerRadius = 20
+        
+    }
 
 }
