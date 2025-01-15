@@ -14,6 +14,22 @@ class RegistrationViewController: UIViewController {
     @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
     var emailText : String?
+    
+    
+    enum AccountValidationResponse : String {
+        case valid = ""
+        case usernameEmpty = "Email cannot be empty"
+        case usernameContainsSpace = "Email cannot contain spaces"
+        case invalidUsernameFormat = "Email must be in the format abc@xyz.com"
+        case usernameInUse = "An account already exists with this email"
+        case passwordNotMatching = "Passwords do not match"
+        case passwordNotLong = "Password must be atleast 6 characters"
+        case passwordNoSpecialCharacter = "Password must contain a special character"
+        case passwordNoNumber = "Password must contain a number"
+        case passwordNoCapital = "Password must contain a capital"
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         email.text = emailText
@@ -21,23 +37,76 @@ class RegistrationViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func validateAccount(user: String, pwd: String, pwd2: String) -> AccountValidationResponse {
+        
+        /// Verify the email
+        
+        guard user != "" else {
+            return AccountValidationResponse.usernameEmpty
+        }
+        
+        guard !user.contains(" ") else {
+            return AccountValidationResponse.usernameContainsSpace
+        }
+        
+        let emailRegEx = "[A-Z0-9a-z._-]+@[A-Z0-9a-z.-]+\\.[A-Za-z]{2,3}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES[c] %@", emailRegEx)
+        
+        guard emailPredicate.evaluate(with: user) else {
+            return AccountValidationResponse.invalidUsernameFormat
+        }
+        
+        // Add check if account exists
+        
+        
+        /// Verify the password
+        
+        guard pwd.count >= 6 else {
+            return AccountValidationResponse.passwordNotLong
+        }
+        
+        let specialCharacters = CharacterSet(charactersIn: "!@#$%^&*()_+-=<>?,./:\";'[]{}|\\")
+        guard let _ = pwd.rangeOfCharacter(from: specialCharacters) else {
+            return AccountValidationResponse.passwordNoSpecialCharacter
+        }
+        
+        let numericCharacters = CharacterSet(charactersIn: "1234567890")
+        guard let _ = pwd.rangeOfCharacter(from: numericCharacters) else {
+            return AccountValidationResponse.passwordNoNumber
+        }
+        
+        guard pwd.lowercased() != pwd else {
+            return AccountValidationResponse.passwordNoCapital
+        }
+        
+        guard pwd == pwd2 else {
+            return AccountValidationResponse.passwordNotMatching
+        }
+        
+        
+        return AccountValidationResponse.valid
     }
-    */
+    
+    
     
     @IBAction func register(_ sender: Any) {
         
+        let validationResponse = validateAccount(user: email.text!, pwd: password.text!, pwd2: confirmPassword.text!)
+        
+        errorLabel.isHidden = false
+        errorLabel.text = validationResponse.rawValue
+        
+        guard validationResponse == AccountValidationResponse.valid else {
+            return
+        }
+        
+        // store/save account
         
         
         print("User created, data saved successfully")
         self.navigationController?.popViewController(animated: true)
         self.performSegue(withIdentifier: "tabSegue", sender: nil)
+         
     }
     
 
