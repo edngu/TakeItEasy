@@ -9,9 +9,15 @@ import UIKit
 
 class ResultsViewController: UIViewController {
 
+    
+    @IBOutlet weak var backdropView0: UIView!
+    @IBOutlet weak var backdropView1: UIView!
+    @IBOutlet weak var backdropView2: UIView!
+    @IBOutlet weak var backdropView3: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupUI()
         // Do any additional setup after loading the view.
     }
     
@@ -25,5 +31,12 @@ class ResultsViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func setupUI(){
+        backdropView0.layer.cornerRadius = 20
+        backdropView1.layer.cornerRadius = 20
+        backdropView2.layer.cornerRadius = 20
+        backdropView3.layer.cornerRadius = 20
+    }
 
 }
