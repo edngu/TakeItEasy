@@ -20,6 +20,7 @@ class LoginViewController: UIViewController {
         
         DBHelper.dbhelper.createDatabase()
         DBHelper.dbhelper.createAccountTable()
+        DBHelper.dbhelper.createNoteTable()
     }
     
 

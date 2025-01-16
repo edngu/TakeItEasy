@@ -11,8 +11,9 @@ import SQLite3
 class DBHelper {
     
     static var dbhelper = DBHelper()
-    var db: OpaquePointer?
-    var accountList = [Account]()
+    private var db: OpaquePointer?
+    private var accountList = [Account]()
+    private var notesList = [Note]()
     
     private init() {}
     
@@ -26,9 +27,11 @@ class DBHelper {
     }
     
     
+    /// Accounts
+    
     func createAccountTable() {
         
-        var sql = "CREATE TABLE IF NOT EXISTS account(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT, points INTEGER, time_account_created TEXT)"
+        let sql = "CREATE TABLE IF NOT EXISTS account(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT, points INTEGER, time_account_created TEXT)"
         
         if sqlite3_exec(db,sql,nil,nil,nil) != SQLITE_OK {
             let err = String(cString: sqlite3_errmsg(db)!)
@@ -82,24 +85,26 @@ class DBHelper {
         let query = "SELECT * FROM account"
         if sqlite3_prepare(db, query, -1, &stmt, nil) != SQLITE_OK {
             let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
             return accountList
         }
         
         while(sqlite3_step(stmt) == SQLITE_ROW) {
-            let fetched_email = String(cString: sqlite3_column_text(stmt, 1))
-            let fetched_password = String(cString: sqlite3_column_text(stmt, 2))
-            let fetched_points = Int(sqlite3_column_int(stmt, 3))
-            let fetched_date = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 4)))
+            let id = sqlite3_column_int(stmt, 0)
+            let fetchedEmail = String(cString: sqlite3_column_text(stmt, 1))
+            let fetchedPassword = String(cString: sqlite3_column_text(stmt, 2))
+            let fetchedPoints = Int(sqlite3_column_int(stmt, 3))
+            let fetchedDate = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 4)))
             
-            let fetched_account = Account(email: fetched_email, password: fetched_password, points: fetched_points, time_account_created: fetched_date)
-            accountList.append(fetched_account)
+            let fetchedAccount = Account(id: id, email: fetchedEmail, password: fetchedPassword, points: fetchedPoints, timeAccountCreated: fetchedDate)
+            accountList.append(fetchedAccount)
         }
         
         return accountList
     }
     
     func fetchAccountByEmail(email: NSString) -> Account? {
-        var fetched_account : Account?
+        var fetchedAccount : Account?
         var stmt : OpaquePointer?
         let query = "SELECT * FROM account WHERE email = ?"
         
@@ -114,20 +119,146 @@ class DBHelper {
         }
         
         if sqlite3_step(stmt) == SQLITE_ROW {
-            let fetched_email = String(cString: sqlite3_column_text(stmt, 1))
-            let fetched_password = String(cString: sqlite3_column_text(stmt, 2))
-            let fetched_points = Int(sqlite3_column_int(stmt, 3))
-            let fetched_date = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 4)))
+            let id = sqlite3_column_int(stmt, 0)
+            let fetchedEmail = String(cString: sqlite3_column_text(stmt, 1))
+            let fetchedPassword = String(cString: sqlite3_column_text(stmt, 2))
+            let fetchedPoints = Int(sqlite3_column_int(stmt, 3))
+            let fetchedDate = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 4)))
             
-            fetched_account = Account(email: fetched_email, password: fetched_password, points: fetched_points, time_account_created: fetched_date)
+            fetchedAccount = Account(id: id, email: fetchedEmail, password: fetchedPassword, points: fetchedPoints, timeAccountCreated: fetchedDate)
         } else {
             print("Could not get account")
         }
         
         sqlite3_finalize(stmt)
         
-        return fetched_account
+        return fetchedAccount
     }
     
+    
+    
+    /// Notes
+
+    
+    func createNoteTable() {
+        let sql = "CREATE TABLE IF NOT EXISTS note(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, time_last_edit TEXT, pinned INTEGER, account_id INTEGER)"
+        
+        if sqlite3_exec(db,sql,nil,nil,nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+    }
+    
+    
+    func insertNote(accountID: Int32) -> Note? {
+        var newNote : Note?
+        var stmt : OpaquePointer?
+        let query = "INSERT INTO note(title, content, time_last_edit, pinned, account_id) values (?,?,?,?,?) RETURNING *"
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_text(stmt, 1, NSString("New Note").utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_text(stmt, 2, NSString("").utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        let new_date = Date()
+        if sqlite3_bind_text(stmt, 3, NSString(string: new_date.ISO8601Format()).utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+
+        if sqlite3_bind_int(stmt, 4, 0) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 5, accountID) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_step(stmt) != SQLITE_ROW {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        } else {
+            let id = sqlite3_column_int(stmt, 0)
+            let fetchedTitle = String(cString: sqlite3_column_text(stmt, 1))
+            let fetchedContent = String(cString: sqlite3_column_text(stmt, 2))
+            let fetchedTimeLastEdit = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 3)))
+            let fetchedPinned = sqlite3_column_int(stmt, 4) == 1
+            let fetchedAccountID = Int32(sqlite3_column_int(stmt, 5))
+            
+            newNote = Note(id: id, title: fetchedTitle, content: fetchedContent, timeLastEdit: fetchedTimeLastEdit, pinned: fetchedPinned, accountID: fetchedAccountID)        }
+        
+        if sqlite3_step(stmt) != SQLITE_DONE {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        } else {
+            print("Note created")
+        }
+        
+        return newNote
+    }
+    
+    
+    func deleteNote(id: Int32) {
+        var stmt : OpaquePointer?
+        let query = "DELETE FROM note WHERE id = ?"
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 1, id) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_step(stmt) == SQLITE_DONE {
+            print("Note deleted")
+        } else {
+            print("Note could not be deleted")
+        }
+    }
+    
+    
+    func fetchAllNotesByAccount(account_id: Int32) -> [Note] {
+        notesList.removeAll()
+        var stmt : OpaquePointer?
+        let query = "SELECT * FROM note INNER JOIN account ON note.account_id = account.id WHERE note.account_id = ?"
+        
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 1, Int32(account_id)) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            let id = sqlite3_column_int(stmt, 0)
+            let fetchedTitle = String(cString: sqlite3_column_text(stmt, 1))
+            let fetchedContent = String(cString: sqlite3_column_text(stmt, 2))
+            let fetchedTimeLastEdit = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 3)))
+            let fetchedPinned = sqlite3_column_int(stmt, 4) == 1
+            let fetchedAccountID = Int32(sqlite3_column_int(stmt, 5))
+            
+            let fetchedNote = Note(id: id, title: fetchedTitle, content: fetchedContent, timeLastEdit: fetchedTimeLastEdit, pinned: fetchedPinned, accountID: fetchedAccountID)
+            notesList.append(fetchedNote)
+            
+        }
+        
+        return notesList
+    }
     
 }
