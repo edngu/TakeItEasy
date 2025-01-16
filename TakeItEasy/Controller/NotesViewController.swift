@@ -19,7 +19,13 @@ class NotesViewController: UIViewController{
         super.viewDidLoad()
         setupUI()
         // Do any additional setup after loading the view.
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         notesList = DBHelper.dbhelper.fetchAllNotesByAccount(account_id: 1)
+        notesList.sort {$0.timeLastEdit! > $1.timeLastEdit!}
+        tableView.reloadData()
     }
     
     func setupUI(){
@@ -35,6 +41,14 @@ class NotesViewController: UIViewController{
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+ 
+        if (segue.identifier == "noteSegue") {
+            let noteView = segue.destination as! NoteViewController
+            let note = sender as! Note?
+            noteView.note = note
+        }
+    }
 }
 
 extension NotesViewController: UITableViewDataSource, UITableViewDelegate{
@@ -57,13 +71,14 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notesCell", for: indexPath) as! NotesTableViewCell
-        cell.textLabel?.text = "Notes"
+        cell.title?.text = notesList[indexPath.section].title
+        cell.subtitle?.text = "Lasted edited: " + (notesList[indexPath.section].timeLastEdit?.ISO8601Format())!
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.performSegue(withIdentifier: "noteSegue", sender: nil)
+        self.performSegue(withIdentifier: "noteSegue", sender: notesList[indexPath.section])
         
     }
 }

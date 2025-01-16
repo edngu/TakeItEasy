@@ -15,10 +15,34 @@ class NoteViewController: UIViewController {
     @IBOutlet weak var noteName: UITextField!
     @IBOutlet weak var text: UITextView!
     
+    var note : Note?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         // Do any additional setup after loading the view.
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        noteName.text = note?.title
+        text.text = note?.content
+    }
+    
+    
+    // Save notes here temporarily. Potentially add save button.
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let id = note?.id {
+            DBHelper.dbhelper.updateNoteTitle(id: id, title: noteName.text! as NSString)
+            DBHelper.dbhelper.updateNoteContent(id: id, content: text.text! as NSString)
+        } else {
+            print("Note changes not saved")
+        }
+        
     }
     
 

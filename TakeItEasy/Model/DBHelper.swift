@@ -261,4 +261,93 @@ class DBHelper {
         return notesList
     }
     
+    
+    func updateNoteTitle(id: Int32, title: NSString) {
+        var stmt : OpaquePointer?
+        let query = "UPDATE note SET title = ?, time_last_edit = ? WHERE id = ?"
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_text(stmt, 1, title.utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        let new_date = Date()
+        if sqlite3_bind_text(stmt, 2, NSString(string: new_date.ISO8601Format()).utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 3, id) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_step(stmt) == SQLITE_DONE {
+            print("Note title updated")
+        } else {
+            print("Failed to update title")
+        }
+        
+        sqlite3_finalize(stmt)
+    }
+    
+    
+    func updateNoteContent(id: Int32, content: NSString) {
+        var stmt : OpaquePointer?
+        let query = "UPDATE note SET content = ?, time_last_edit = ? WHERE id = ?"
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_text(stmt, 1, content.utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        let new_date = Date()
+        if sqlite3_bind_text(stmt, 2, NSString(string: new_date.ISO8601Format()).utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 3, id) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_step(stmt) == SQLITE_DONE {
+            print("Note content updated")
+        } else {
+            print("Failed to update content")
+        }
+        
+        sqlite3_finalize(stmt)
+    }
+    
+    
+    func updateNotePinned(id: Int32, pinned: Bool) {
+        var stmt : OpaquePointer?
+        let query = "UPDATE note SET pinned = ? WHERE id = ?"
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        sqlite3_bind_int(stmt, 1, pinned ? 1 : 0)
+        sqlite3_bind_int(stmt, 2, id)
+        
+        if sqlite3_step(stmt) == SQLITE_DONE {
+            print("Note pin status changed")
+        } else {
+            print("Failed to update pin status")
+        }
+        
+        sqlite3_finalize(stmt)
+    }
+    
 }
