@@ -14,6 +14,7 @@ class NoteViewController: UIViewController {
     @IBOutlet weak var textBackdropView: UIView!
     @IBOutlet weak var noteName: UITextField!
     @IBOutlet weak var text: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
