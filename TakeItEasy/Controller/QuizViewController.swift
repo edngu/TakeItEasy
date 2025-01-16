@@ -11,8 +11,10 @@ class QuizViewController: UIViewController {
 
 
     @IBOutlet weak var quizInfoBackdropView: UIView!
+    @IBOutlet weak var quizCollectionView: UICollectionView!
     
     var quizList : [Quiz] = []
+    var searchData : [Quiz] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,7 @@ class QuizViewController: UIViewController {
         quizList.append(Quiz(title: "test1"))
         quizList.append(Quiz(title: "test2"))
         quizList.append(Quiz(title: "test3"))
-        
+        searchData = quizList
     }
     
 
@@ -39,7 +41,7 @@ class QuizViewController: UIViewController {
 
 extension QuizViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return quizList.count
+        return searchData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -49,7 +51,7 @@ extension QuizViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "quizCell", for: indexPath) as! QuizCollectionViewCell
         cell.layer.cornerRadius = 20
-        cell.quizTitle.text = quizList[indexPath.row].title
+        cell.quizTitle.text = searchData[indexPath.row].title
         //cell.quizImage.image = UIImage(systemName: "trash.fill")
         cell.quizBackDropView.layer.cornerRadius = 20
         
@@ -58,7 +60,19 @@ extension QuizViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "questionSegue", sender: quizList[indexPath.row])
+        self.performSegue(withIdentifier: "questionSegue", sender: searchData[indexPath.row])
+    }
+    
+}
+
+
+extension QuizViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchData = searchText.isEmpty ? quizList : quizList.filter {
+            (quiz: Quiz) -> Bool in
+            return quiz.title.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+        }
+        quizCollectionView.reloadData()
     }
     
 }
