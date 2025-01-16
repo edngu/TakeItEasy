@@ -322,6 +322,10 @@
                                                     </subviews>
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" red="0.2901960784" green="0.1647058824" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                                <connections>
+                                                    <outlet property="subtitle" destination="ScX-Qk-Xur" id="s7W-iB-ZDx"/>
+                                                    <outlet property="title" destination="Qqs-ie-mk0" id="aFK-fh-uEN"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
