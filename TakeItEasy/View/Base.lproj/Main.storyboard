@@ -129,14 +129,14 @@
         <!--Book-->
         <scene sceneID="Gaf-zW-Fof">
             <objects>
-                <viewController title="Book" id="dsA-NP-Jap" customClass="BookViewController" customModule="TakeItEasy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="VC1" storyboardIdentifier="VC1" title="Book" id="dsA-NP-Jap" customClass="BookViewController" customModule="TakeItEasy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WKa-MB-2XF">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k7u-iK-2RE" userLabel="pdfView">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Mst-Ky-eyo"/>
@@ -152,7 +152,17 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eI7-dm-LXE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="884.73282442748086" y="1053.5211267605634"/>
+            <point key="canvasLocation" x="885" y="1749"/>
+        </scene>
+        <!--Book Page View Controller-->
+        <scene sceneID="UUn-i7-yLz">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="fdW-2A-SRu" customClass="BookPageViewController" customModule="TakeItEasy" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="z2F-Ri-Jvt"/>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bCd-ow-mcu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="885" y="1054"/>
         </scene>
         <!--Search-->
         <scene sceneID="Ec6-dl-rOg">
@@ -545,7 +555,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Books" id="wDN-oC-waO"/>
                     <connections>
-                        <segue destination="dsA-NP-Jap" kind="show" identifier="bookSegue" id="c9c-Wx-wei"/>
+                        <segue destination="fdW-2A-SRu" kind="show" identifier="bookSegue" id="BKR-cT-ENn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vlU-ZD-fZn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -579,18 +589,27 @@
                                 <rect key="frame" x="0.0" y="232" width="393" height="586"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="M6I-Ei-8k0">
-                                        <rect key="frame" x="10" y="10" width="373" height="566"/>
+                                        <rect key="frame" x="10" y="10" width="373" height="516"/>
                                         <color key="backgroundColor" red="0.2901960784" green="0.1647058824" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <color key="textColor" systemColor="systemBackgroundColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="645-fm-KGr" userLabel="saveNote">
+                                        <rect key="frame" x="167" y="534" width="61" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Save"/>
+                                        <connections>
+                                            <action selector="saveNote:" destination="hKi-n9-Lse" eventType="touchUpInside" id="Qx3-3T-ged"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.21176470589999999" green="0.1137254902" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="textBackdropView"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="M6I-Ei-8k0" secondAttribute="bottom" constant="10" id="C7G-oH-kWp"/>
+                                    <constraint firstAttribute="bottom" secondItem="M6I-Ei-8k0" secondAttribute="bottom" constant="60" id="C7G-oH-kWp"/>
                                     <constraint firstItem="M6I-Ei-8k0" firstAttribute="top" secondItem="ALk-nN-de7" secondAttribute="top" constant="10" id="arT-uP-Bfl"/>
                                     <constraint firstAttribute="trailing" secondItem="M6I-Ei-8k0" secondAttribute="trailing" constant="10" id="cVW-XK-uTa"/>
                                     <constraint firstItem="M6I-Ei-8k0" firstAttribute="leading" secondItem="ALk-nN-de7" secondAttribute="leading" constant="10" id="fn2-vk-A80"/>
@@ -750,7 +769,7 @@
                                 <rect key="frame" x="76" y="173" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FMd-XW-8Ei">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FMd-XW-8Ei" userLabel="View0">
                                 <rect key="frame" x="-1" y="423" width="395" height="347"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Results" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k7h-Z1-bZD">
@@ -854,6 +873,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tableCellBlueTextColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
