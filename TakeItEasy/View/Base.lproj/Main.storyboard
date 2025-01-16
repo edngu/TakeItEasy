@@ -255,6 +255,7 @@
                                         <connections>
                                             <outlet property="quizBackDropView" destination="5kj-Q7-cuY" id="YJU-g4-Y50"/>
                                             <outlet property="quizImage" destination="sui-oe-MaH" id="Wv4-5S-jmQ"/>
+                                            <outlet property="quizTitle" destination="bKj-AF-EAM" id="WNO-rT-Q3m"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
