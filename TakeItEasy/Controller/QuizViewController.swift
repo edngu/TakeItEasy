@@ -11,28 +11,35 @@ class QuizViewController: UIViewController {
 
 
     @IBOutlet weak var quizInfoBackdropView: UIView!
+    
+    var quizList : [Quiz] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         quizInfoBackdropView.layer.cornerRadius = 20
         // Do any additional setup after loading the view.
+        
+        quizList.append(Quiz(title: "test1"))
+        quizList.append(Quiz(title: "test2"))
+        quizList.append(Quiz(title: "test3"))
+        
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+ 
+        if (segue.identifier == "questionSegue") {
+            let questionView = segue.destination as! QuestionViewController
+            let quiz = sender as! Quiz?
+            questionView.quiz = quiz
+        }
     }
-    */
-
+    
 }
 
 extension QuizViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return quizList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -42,6 +49,7 @@ extension QuizViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "quizCell", for: indexPath) as! QuizCollectionViewCell
         cell.layer.cornerRadius = 20
+        cell.quizTitle.text = quizList[indexPath.row].title
         //cell.quizImage.image = UIImage(systemName: "trash.fill")
         cell.quizBackDropView.layer.cornerRadius = 20
         
@@ -50,7 +58,7 @@ extension QuizViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "questionSegue", sender: nil)
+        self.performSegue(withIdentifier: "questionSegue", sender: quizList[indexPath.row])
     }
     
 }
