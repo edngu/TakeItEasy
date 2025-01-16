@@ -48,5 +48,9 @@ extension BooksViewController: UICollectionViewDelegate, UICollectionViewDataSou
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "bookSegue", sender: nil)
+    }
+    
     
 }

@@ -31,6 +31,8 @@ class NoteViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    @IBAction func saveNote(_ sender: Any) {
+    }
     
     func setupUI(){
         noteName.layer.cornerRadius = 20
