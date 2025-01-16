@@ -14,6 +14,7 @@ class NotesViewController: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     
     var notesList : [Note] = []
+    var searchData : [Note] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,7 @@ class NotesViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         notesList = DBHelper.dbhelper.fetchAllNotesByAccount(account_id: 1)
         notesList.sort {$0.timeLastEdit! > $1.timeLastEdit!}
+        searchData = notesList
         tableView.reloadData()
     }
     
@@ -37,6 +39,7 @@ class NotesViewController: UIViewController{
         let note = DBHelper.dbhelper.insertNote(accountID: 1)
         if note != nil {
             notesList.insert(note!, at: 0)
+            searchData = notesList
             tableView.reloadData()
         }
     }
@@ -60,25 +63,36 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             DBHelper.dbhelper.deleteNote(id: notesList[indexPath.section].id!)
-            notesList.remove(at: indexPath.section)
+            searchData.remove(at: indexPath.section)
             tableView.deleteSections([indexPath.section], with: .fade)
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return notesList.count
+        return searchData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notesCell", for: indexPath) as! NotesTableViewCell
-        cell.title?.text = notesList[indexPath.section].title
-        cell.subtitle?.text = "Lasted edited: " + (notesList[indexPath.section].timeLastEdit?.ISO8601Format())!
+        cell.title?.text = searchData[indexPath.section].title
+        cell.subtitle?.text = "Lasted edited: " + (searchData[indexPath.section].timeLastEdit?.ISO8601Format())!
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.performSegue(withIdentifier: "noteSegue", sender: notesList[indexPath.section])
+        self.performSegue(withIdentifier: "noteSegue", sender: searchData[indexPath.section])
         
     }
+}
+
+extension NotesViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchData = searchText.isEmpty ? notesList : notesList.filter {
+            (note: Note) -> Bool in
+            return note.title?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+        }
+        tableView.reloadData()
+    }
+    
 }
