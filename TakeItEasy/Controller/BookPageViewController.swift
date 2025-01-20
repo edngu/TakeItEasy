@@ -6,16 +6,30 @@
 //
 
 import UIKit
+import PDFKit
 
 class BookPageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
 
     //lazy var vcArr: [UIViewController] = { return [self.viewControllerInstance("VC1"), viewControllerInstance("VC2")] }()
     var vcArr = [UIViewController]()
     var pageText: String?
+    var pdfView = PDFView()
+    var book: BookAPIHelper.BookModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
         self.dataSource = self
+        
+        if let resourseURL = book?.download_url {
+            let document = PDFDocument(url: URL(string: resourseURL)!)
+            pdfView.document = document
+            
+            let bvc = BookViewController()
+            bvc.view = pdfView
+            vcArr.append(bvc)
+        }
+        
         
         //Adding new placeholder pages in PageViewController
         for i in 0...4{

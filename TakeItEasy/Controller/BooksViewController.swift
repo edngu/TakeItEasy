@@ -9,31 +9,30 @@ import UIKit
 
 class BooksViewController: UIViewController {
 
-    var booksList = ["1"]
+    var booksList: [BookAPIHelper.BookModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        booksList = BookAPIHelper.shared.fetchedBookData
         // Do any additional setup after loading the view.
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+ 
+        if (segue.identifier == "bookSegue") {
+            let pageView = segue.destination as! BookPageViewController
+            let book = sender as! BookAPIHelper.BookModel?
+            pageView.book = book
+        }
     }
-    */
-
 }
 
 extension BooksViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return booksList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -44,12 +43,12 @@ extension BooksViewController: UICollectionViewDelegate, UICollectionViewDataSou
         //let bookCell =
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookcell", for: indexPath) as! BookCollectionViewCell
-        cell.bookTitleLabel?.text = "testing"
+        cell.bookTitleLabel?.text = booksList[indexPath.row].title
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "bookSegue", sender: nil)
+        self.performSegue(withIdentifier: "bookSegue", sender: booksList[indexPath.row])
     }
     
     
