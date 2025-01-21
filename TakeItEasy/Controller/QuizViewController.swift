@@ -54,8 +54,6 @@ extension QuizViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.quizTitle.text = searchData[indexPath.row].title
         //cell.quizImage.image = UIImage(systemName: "trash.fill")
         cell.quizBackDropView.layer.cornerRadius = 20
-        
-        
         return cell
     }
     

@@ -19,6 +19,7 @@ class NotesViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
         // Do any additional setup after loading the view.
         
     }
@@ -82,8 +83,15 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         self.performSegue(withIdentifier: "noteSegue", sender: searchData[indexPath.section])
-        
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5
+    }
+    
 }
 
 extension NotesViewController: UISearchBarDelegate {
