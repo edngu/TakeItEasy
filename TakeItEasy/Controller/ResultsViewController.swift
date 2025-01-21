@@ -13,7 +13,10 @@ class ResultsViewController: UIViewController {
     @IBOutlet weak var backdropView0: UIView!
     @IBOutlet weak var backdropView1: UIView!
     @IBOutlet weak var backdropView2: UIView!
-    @IBOutlet weak var backdropView3: UIView!
+    @IBOutlet weak var numPoints: UILabel!
+    @IBOutlet weak var numWrong: UILabel!
+    
+    @IBOutlet weak var numCorrect: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +39,7 @@ class ResultsViewController: UIViewController {
         backdropView0.layer.cornerRadius = 20
         backdropView1.layer.cornerRadius = 20
         backdropView2.layer.cornerRadius = 20
-        backdropView3.layer.cornerRadius = 20
+
     }
 
 }

@@ -41,20 +41,20 @@ class QuestionViewController: UIViewController {
     
     func changeButtonColors(selectedButton: Int) {
         
-        questionButton1.backgroundColor = .brown
-        questionButton2.backgroundColor = .brown
-        questionButton3.backgroundColor = .brown
-        questionButton4.backgroundColor = .brown
+        questionButton1.tintColor = .brown
+        questionButton2.tintColor = .brown
+        questionButton3.tintColor = .brown
+        questionButton4.tintColor = .brown
 
         switch selectedButton {
             case 0:
-                questionButton1.backgroundColor = .blue
+                questionButton1.tintColor = .blue
             case 1:
-                questionButton2.backgroundColor = .blue
+                questionButton2.tintColor = .blue
             case 2:
-                questionButton3.backgroundColor = .blue
+                questionButton3.tintColor = .blue
             case 3:
-                questionButton4.backgroundColor = .blue
+                questionButton4.tintColor = .blue
             default:
                 break
         }
@@ -83,6 +83,8 @@ class QuestionViewController: UIViewController {
         changeButtonColors(selectedButton: 3)
     }
     
+    @IBAction func didChangeSegment(_ sender: Any) {
+    }
     
     
 }

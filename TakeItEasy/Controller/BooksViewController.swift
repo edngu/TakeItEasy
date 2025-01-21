@@ -40,10 +40,10 @@ extension BooksViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        //let bookCell =
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookcell", for: indexPath) as! BookCollectionViewCell
         cell.bookTitleLabel?.text = booksList[indexPath.row].title
+        cell.layer.cornerRadius = 20
+        cell.bookTitleLabel.layer.cornerRadius = 20
         return cell
     }
     
