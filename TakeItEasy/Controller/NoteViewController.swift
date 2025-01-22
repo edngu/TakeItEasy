@@ -56,7 +56,6 @@ class NoteViewController: UIViewController {
     */
     
     func setupUI(){
-        noteName.layer.cornerRadius = 20
         text.layer.cornerRadius = 20
         textBackdropView.layer.cornerRadius = 20
         
