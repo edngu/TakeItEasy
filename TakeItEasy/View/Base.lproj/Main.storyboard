@@ -697,46 +697,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gqd-Mi-cur" userLabel="titleBackdropView">
-                                <rect key="frame" x="-1" y="103" width="395" height="102"/>
-                                <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Text Title" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eyk-ST-VCA">
-                                        <rect key="frame" x="17" y="34" width="361" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.2901960784" green="0.1647058824" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="textColor" systemColor="systemBackgroundColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" red="0.21176470589999999" green="0.1137254902" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" identifier="titleBackdropView"/>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALk-nN-de7" userLabel="textBackdropView">
-                                <rect key="frame" x="0.0" y="232" width="393" height="586"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="M6I-Ei-8k0">
-                                        <rect key="frame" x="10" y="10" width="373" height="516"/>
+                                        <rect key="frame" x="10" y="10" width="373" height="695"/>
                                         <color key="backgroundColor" red="0.2901960784" green="0.1647058824" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <color key="textColor" systemColor="systemBackgroundColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="645-fm-KGr" userLabel="saveNote">
-                                        <rect key="frame" x="167" y="534" width="61" height="35"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Save"/>
-                                        <connections>
-                                            <action selector="saveNote:" destination="hKi-n9-Lse" eventType="touchUpInside" id="Qx3-3T-ged"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.21176470589999999" green="0.1137254902" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="textBackdropView"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="M6I-Ei-8k0" secondAttribute="bottom" constant="60" id="C7G-oH-kWp"/>
+                                    <constraint firstAttribute="bottom" secondItem="M6I-Ei-8k0" secondAttribute="bottom" constant="10" id="C7G-oH-kWp"/>
                                     <constraint firstItem="M6I-Ei-8k0" firstAttribute="top" secondItem="ALk-nN-de7" secondAttribute="top" constant="10" id="arT-uP-Bfl"/>
                                     <constraint firstAttribute="trailing" secondItem="M6I-Ei-8k0" secondAttribute="trailing" constant="10" id="cVW-XK-uTa"/>
                                     <constraint firstItem="M6I-Ei-8k0" firstAttribute="leading" secondItem="ALk-nN-de7" secondAttribute="leading" constant="10" id="fn2-vk-A80"/>
@@ -750,21 +726,15 @@
                             <constraint firstItem="X7d-tc-fHL" firstAttribute="bottom" secondItem="ALk-nN-de7" secondAttribute="bottom" id="3Bf-r4-blB"/>
                             <constraint firstItem="ALk-nN-de7" firstAttribute="trailing" secondItem="X7d-tc-fHL" secondAttribute="trailing" id="Ewc-fo-gVe"/>
                             <constraint firstItem="ALk-nN-de7" firstAttribute="leading" secondItem="X7d-tc-fHL" secondAttribute="leading" id="Gk5-V7-VD7"/>
-                            <constraint firstItem="Gqd-Mi-cur" firstAttribute="top" secondItem="X7d-tc-fHL" secondAttribute="top" id="OTp-a3-30H"/>
                             <constraint firstItem="ALk-nN-de7" firstAttribute="leading" secondItem="iFo-FH-Xvl" secondAttribute="leading" id="W8o-FK-KiO"/>
                             <constraint firstItem="X7d-tc-fHL" firstAttribute="trailing" secondItem="ALk-nN-de7" secondAttribute="trailing" id="ZEB-eC-97r"/>
-                            <constraint firstItem="Gqd-Mi-cur" firstAttribute="centerX" secondItem="ALk-nN-de7" secondAttribute="centerX" id="dfY-lN-Uys"/>
-                            <constraint firstItem="ALk-nN-de7" firstAttribute="top" secondItem="Gqd-Mi-cur" secondAttribute="bottom" constant="27" id="hOm-9d-cfE"/>
-                            <constraint firstAttribute="bottom" secondItem="Gqd-Mi-cur" secondAttribute="bottom" constant="647" id="nEA-9o-mLL"/>
-                            <constraint firstItem="Gqd-Mi-cur" firstAttribute="leading" secondItem="iFo-FH-Xvl" secondAttribute="leadingMargin" constant="-17" id="oxL-6S-mMg"/>
+                            <constraint firstItem="ALk-nN-de7" firstAttribute="top" secondItem="X7d-tc-fHL" secondAttribute="top" id="f9f-H6-dnH"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JAL-uF-QlR"/>
                     <connections>
-                        <outlet property="noteName" destination="eyk-ST-VCA" id="82q-3N-6go"/>
                         <outlet property="text" destination="M6I-Ei-8k0" id="AHc-M1-tQw"/>
                         <outlet property="textBackdropView" destination="ALk-nN-de7" id="Fef-bF-JsU"/>
-                        <outlet property="titleBackdropView" destination="Gqd-Mi-cur" id="skl-hK-aDt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8pO-d1-0Vl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -845,6 +815,15 @@
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="answer4Click:" destination="UeZ-f4-C9r" eventType="touchUpInside" id="wcS-JE-D6T"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8hD-AS-vfw">
+                                        <rect key="frame" x="160" y="304" width="78" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Submit"/>
+                                        <connections>
+                                            <action selector="submit:" destination="UeZ-f4-C9r" eventType="touchUpInside" id="YbD-EZ-He3"/>
                                         </connections>
                                     </button>
                                 </subviews>

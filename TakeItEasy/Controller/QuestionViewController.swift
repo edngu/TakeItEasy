@@ -63,7 +63,6 @@ class QuestionViewController: UIViewController {
     
 
     @IBAction func answer1Click(_ sender: Any) {
-        self.performSegue(withIdentifier: "resultsSegue", sender: self)
         userResponses[currentQuestionIndex] = 0
         changeButtonColors(selectedButton: 0)
     }
@@ -85,6 +84,8 @@ class QuestionViewController: UIViewController {
     
     @IBAction func didChangeSegment(_ sender: Any) {
     }
-    
+    @IBAction func submit(_ sender: Any) {
+        self.performSegue(withIdentifier: "resultsSegue", sender: self)
+    }
     
 }
