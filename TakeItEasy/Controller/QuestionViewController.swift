@@ -14,6 +14,8 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var questionButton3: UIButton!
     @IBOutlet weak var questionButton4: UIButton!
     
+    @IBOutlet weak var questionLabel: UILabel!
+    
     var quiz : Quiz?
     var userResponses : [Int?] = Array(repeating: nil, count: 5)
     var currentQuestionIndex = 0
@@ -34,6 +36,8 @@ class QuestionViewController: UIViewController {
         guard let a = quiz?.getQuestions()[currentQuestionIndex].getResponseOptions() else {
             return
         }
+        
+        questionLabel.text = quiz?.getQuestions()[currentQuestionIndex].question
         
         questionButton1.setTitle(a[0], for: .normal)
         questionButton2.setTitle(a[1], for: .normal)
@@ -92,7 +96,17 @@ class QuestionViewController: UIViewController {
     }
     @IBAction func submit(_ sender: Any) {
         quiz?.markQuiz(userResponses: userResponses)
-        DBHelper.dbhelper.updateAccountQuizResults(id: 1, quizTakenCount: 1, quizTotalScore: 0, points: 0)
+        if let account = GlobalData.shared.signedInAccount {
+            let newCount = account.quizTakenCount!+1
+            let newScore = account.quizTotalScore!+(quiz?.score ?? 0)
+            let newPoints = account.points!+(quiz?.getPoints() ?? 0)
+            
+            DBHelper.dbhelper.updateAccountQuizResults(id: account.id!, quizTakenCount: newCount, quizTotalScore: newScore, points: newPoints)
+            
+            GlobalData.shared.signedInAccount?.quizTakenCount = newCount
+            GlobalData.shared.signedInAccount?.quizTotalScore = newScore
+            GlobalData.shared.signedInAccount?.points = newPoints
+        }
         self.performSegue(withIdentifier: "resultsSegue", sender: quiz)
     }
     
