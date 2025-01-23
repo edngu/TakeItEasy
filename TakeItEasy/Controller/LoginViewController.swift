@@ -48,6 +48,13 @@ class LoginViewController: UIViewController {
     
     @IBAction func login(_ sender: Any) {
         
+        /// replace later with actual login
+        if let a = DBHelper.dbhelper.fetchAccountByID(id: 1) {
+            a.password = ""
+            GlobalData.shared.signedInAccount = a
+        } else {
+            GlobalData.shared.signedInAccount = Account(id: 1, email: "", password: "", points: 0, timeAccountCreated: nil, quizTakenCount: 0, quizTotalScore: 0)
+        }
         self.performSegue(withIdentifier: "loginSegue", sender: nil)
     }
     

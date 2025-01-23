@@ -158,8 +158,8 @@ class DBHelper {
             let fetchedPassword = String(cString: sqlite3_column_text(stmt, 2))
             let fetchedPoints = Int(sqlite3_column_int(stmt, 3))
             let fetchedDate = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 4)))
-            let fetchedQuizCount = Int(sqlite3_column_int(stmt, 4))
-            let fetchedTotalScore = Int(sqlite3_column_int(stmt, 5))
+            let fetchedQuizCount = Int(sqlite3_column_int(stmt, 5))
+            let fetchedTotalScore = Int(sqlite3_column_int(stmt, 6))
             
             let fetchedAccount = Account(id: id, email: fetchedEmail, password: fetchedPassword, points: fetchedPoints, timeAccountCreated: fetchedDate, quizTakenCount: fetchedQuizCount, quizTotalScore: fetchedTotalScore)
             accountList.append(fetchedAccount)
@@ -189,8 +189,8 @@ class DBHelper {
             let fetchedPassword = String(cString: sqlite3_column_text(stmt, 2))
             let fetchedPoints = Int(sqlite3_column_int(stmt, 3))
             let fetchedDate = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 4)))
-            let fetchedQuizCount = Int(sqlite3_column_int(stmt, 4))
-            let fetchedTotalScore = Int(sqlite3_column_int(stmt, 5))
+            let fetchedQuizCount = Int(sqlite3_column_int(stmt, 5))
+            let fetchedTotalScore = Int(sqlite3_column_int(stmt, 6))
             
             fetchedAccount = Account(id: id, email: fetchedEmail, password: fetchedPassword, points: fetchedPoints, timeAccountCreated: fetchedDate, quizTakenCount: fetchedQuizCount, quizTotalScore: fetchedTotalScore)
         } else {
@@ -224,8 +224,8 @@ class DBHelper {
             let fetchedPassword = String(cString: sqlite3_column_text(stmt, 2))
             let fetchedPoints = Int(sqlite3_column_int(stmt, 3))
             let fetchedDate = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 4)))
-            let fetchedQuizCount = Int(sqlite3_column_int(stmt, 4))
-            let fetchedTotalScore = Int(sqlite3_column_int(stmt, 5))
+            let fetchedQuizCount = Int(sqlite3_column_int(stmt, 5))
+            let fetchedTotalScore = Int(sqlite3_column_int(stmt, 6))
             
             fetchedAccount = Account(id: id, email: fetchedEmail, password: fetchedPassword, points: fetchedPoints, timeAccountCreated: fetchedDate, quizTakenCount: fetchedQuizCount, quizTotalScore: fetchedTotalScore)
         } else {
