@@ -894,6 +894,7 @@
                         <outlet property="questionButton2" destination="Bv3-1X-KY3" id="gpc-jy-skh"/>
                         <outlet property="questionButton3" destination="VVA-PP-S63" id="t2m-mU-smj"/>
                         <outlet property="questionButton4" destination="pzB-yy-6up" id="4C9-Uc-3IH"/>
+                        <outlet property="questionLabel" destination="BTF-x1-jbJ" id="PUW-Dy-xQZ"/>
                         <outlet property="segmentSection" destination="ldt-Iu-tNY" id="gwV-My-BaM"/>
                         <segue destination="oez-0L-mrX" kind="show" identifier="resultsSegue" id="bwl-oZ-UWF"/>
                     </connections>

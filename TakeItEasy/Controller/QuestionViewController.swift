@@ -14,6 +14,8 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var questionButton3: UIButton!
     @IBOutlet weak var questionButton4: UIButton!
     
+    @IBOutlet weak var questionLabel: UILabel!
+    
     var quiz : Quiz?
     var userResponses : [Int?] = Array(repeating: nil, count: 5)
     var currentQuestionIndex = 0
@@ -34,6 +36,8 @@ class QuestionViewController: UIViewController {
         guard let a = quiz?.getQuestions()[currentQuestionIndex].getResponseOptions() else {
             return
         }
+        
+        questionLabel.text = quiz?.getQuestions()[currentQuestionIndex].question
         
         questionButton1.setTitle(a[0], for: .normal)
         questionButton2.setTitle(a[1], for: .normal)
