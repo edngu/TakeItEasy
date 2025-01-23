@@ -12,12 +12,11 @@ class QuizViewController: UIViewController {
 
     @IBOutlet weak var quizInfoBackdropView: UIView!
     @IBOutlet weak var quizCollectionView: UICollectionView!
-    
-    
+    @IBOutlet weak var username: UILabel!
     @IBOutlet weak var quizzesCompletedLabel: UILabel!
     @IBOutlet weak var pointsLabel: UILabel!
     @IBOutlet weak var averageScoreLabel: UILabel!
-    
+
     var quizList : [Quiz] = []
     var searchData : [Quiz] = []
     
