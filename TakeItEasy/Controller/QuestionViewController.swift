@@ -93,7 +93,15 @@ class QuestionViewController: UIViewController {
     @IBAction func submit(_ sender: Any) {
         quiz?.markQuiz(userResponses: userResponses)
         if let account = GlobalData.shared.signedInAccount {
-            DBHelper.dbhelper.updateAccountQuizResults(id: account.id!, quizTakenCount: account.quizTakenCount!+1, quizTotalScore: account.quizTotalScore!+(quiz?.score ?? 0), points: account.points!+(quiz?.getPoints() ?? 0))
+            let newCount = account.quizTakenCount!+1
+            let newScore = account.quizTotalScore!+(quiz?.score ?? 0)
+            let newPoints = account.points!+(quiz?.getPoints() ?? 0)
+            
+            DBHelper.dbhelper.updateAccountQuizResults(id: account.id!, quizTakenCount: newCount, quizTotalScore: newScore, points: newPoints)
+            
+            GlobalData.shared.signedInAccount?.quizTakenCount = newCount
+            GlobalData.shared.signedInAccount?.quizTotalScore = newScore
+            GlobalData.shared.signedInAccount?.points = newPoints
         }
         self.performSegue(withIdentifier: "resultsSegue", sender: quiz)
     }

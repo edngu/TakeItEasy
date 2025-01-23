@@ -13,6 +13,11 @@ class QuizViewController: UIViewController {
     @IBOutlet weak var quizInfoBackdropView: UIView!
     @IBOutlet weak var quizCollectionView: UICollectionView!
     
+    
+    @IBOutlet weak var quizzesCompletedLabel: UILabel!
+    @IBOutlet weak var pointsLabel: UILabel!
+    @IBOutlet weak var averageScoreLabel: UILabel!
+    
     var quizList : [Quiz] = []
     var searchData : [Quiz] = []
     
@@ -25,6 +30,30 @@ class QuizViewController: UIViewController {
         quizList.append(Quiz(title: "test2"))
         quizList.append(Quiz(title: "test3"))
         searchData = quizList
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setAccountStats()
+    }
+    
+    func setAccountStats() {
+        if let num = GlobalData.shared.signedInAccount?.quizTakenCount {
+            quizzesCompletedLabel.text = String(num)
+            
+            if num > 0 {
+                if let score = GlobalData.shared.signedInAccount?.quizTotalScore {
+                    let percentage = Int(Double(score)/Double(num)/5.0*100.0)
+                    averageScoreLabel.text = "\(percentage)%"
+                }
+            }
+        }
+        
+        if let num = GlobalData.shared.signedInAccount?.points {
+            pointsLabel.text = String(num)
+        }
+        
     }
     
 

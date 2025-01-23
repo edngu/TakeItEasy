@@ -283,6 +283,13 @@
                                                 <color key="textColor" systemColor="systemBackgroundColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H1k-gG-Zm9">
+                                                <rect key="frame" x="171" y="57" width="146" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.2901960784" green="0.1647058824" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
@@ -296,6 +303,13 @@
                                                 <color key="textColor" systemColor="systemBackgroundColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1L-G6-SAP">
+                                                <rect key="frame" x="73" y="60" width="88" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.2901960784" green="0.1647058824" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
@@ -307,6 +321,13 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                                 <color key="textColor" systemColor="systemBackgroundColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6SE-Q8-8fD">
+                                                <rect key="frame" x="73" y="60" width="72" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -349,8 +370,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Quiz" id="kJv-LJ-mA0"/>
                     <connections>
+                        <outlet property="averageScoreLabel" destination="x1L-G6-SAP" id="G4T-cV-9Dg"/>
+                        <outlet property="pointsLabel" destination="6SE-Q8-8fD" id="It7-KT-6e1"/>
                         <outlet property="quizCollectionView" destination="8IQ-FK-36f" id="urY-Qn-fQq"/>
                         <outlet property="quizInfoBackdropView" destination="qwE-XD-gIC" id="3kA-HX-moK"/>
+                        <outlet property="quizzesCompletedLabel" destination="H1k-gG-Zm9" id="XBY-wi-5n9"/>
                         <segue destination="UeZ-f4-C9r" kind="show" identifier="questionSegue" id="saC-RB-Y5g"/>
                     </connections>
                 </viewController>
