@@ -29,7 +29,7 @@ class QuizQuestion {
             nums.append(i)
         }
         
-        for i in 0..<3 {
+        for _ in 0..<3 {
             let index = Int.random(in: 0..<nums.count)
             responseOptions.append(fillerResponses[nums.remove(at: index)])
         }
