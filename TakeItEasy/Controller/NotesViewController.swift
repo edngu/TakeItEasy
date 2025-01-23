@@ -12,16 +12,23 @@ class NotesViewController: UIViewController{
     
     @IBOutlet weak var viewForTable: UIView!
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var username: UILabel!
     var notesList : [Note] = []
     var searchData : [Note] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
         // Do any additional setup after loading the view.
+        self.title = "Notes"
+
         
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.tabBarItem.image = UIImage(systemName: "note")
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

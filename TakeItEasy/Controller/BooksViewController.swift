@@ -10,14 +10,18 @@ import UIKit
 class BooksViewController: UIViewController {
 
     var booksList: [BookAPIHelper.BookModel] = []
-    
+    @IBOutlet weak var username: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         booksList = BookAPIHelper.shared.fetchedBookData
         // Do any additional setup after loading the view.
     }
-    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.tabBarItem.image = UIImage(systemName: "book")
+
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
  

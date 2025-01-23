@@ -13,6 +13,7 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var questionButton2: UIButton!
     @IBOutlet weak var questionButton3: UIButton!
     @IBOutlet weak var questionButton4: UIButton!
+    @IBOutlet weak var username: UILabel!
     
     var quiz : Quiz?
     var userResponses : [Int?] = Array(repeating: nil, count: 5)

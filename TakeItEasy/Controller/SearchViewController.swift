@@ -19,6 +19,11 @@ class SearchViewController: UIViewController {
         createBrowser()
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.tabBarItem.image = UIImage(systemName: "magnifyingglass")
+    }
+    
     
     func createBrowser() {
         webView = WKWebView()

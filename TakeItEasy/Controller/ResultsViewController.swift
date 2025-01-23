@@ -15,9 +15,8 @@ class ResultsViewController: UIViewController {
     @IBOutlet weak var backdropView2: UIView!
     @IBOutlet weak var numPoints: UILabel!
     @IBOutlet weak var numWrong: UILabel!
-    
     @IBOutlet weak var numCorrect: UILabel!
-    
+    @IBOutlet weak var username: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()

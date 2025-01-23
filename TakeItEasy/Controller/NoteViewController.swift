@@ -11,9 +11,9 @@ class NoteViewController: UIViewController {
 
 
     @IBOutlet weak var textBackdropView: UIView!
-    @IBOutlet weak var noteName: UITextField!
+    //@IBOutlet weak var noteName: UITextField!
     @IBOutlet weak var text: UITextView!
-    
+    @IBOutlet weak var username: UILabel!
     var note : Note?
     
     override func viewDidLoad() {
@@ -26,7 +26,7 @@ class NoteViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        noteName.text = note?.title
+        //noteName.text = note?.title
         text.text = note?.content
     }
     
@@ -36,7 +36,7 @@ class NoteViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         if let id = note?.id {
-            DBHelper.dbhelper.updateNoteTitle(id: id, title: noteName.text! as NSString)
+            //DBHelper.dbhelper.updateNoteTitle(id: id, title: noteName.text! as NSString)
             DBHelper.dbhelper.updateNoteContent(id: id, content: text.text! as NSString)
         } else {
             print("Note changes not saved")
