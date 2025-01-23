@@ -15,47 +15,55 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var questionButton4: UIButton!
     @IBOutlet weak var username: UILabel!
     
+    @IBOutlet weak var questionLabel: UILabel!
+    
     var quiz : Quiz?
     var userResponses : [Int?] = Array(repeating: nil, count: 5)
     var currentQuestionIndex = 0
     
+    @IBOutlet weak var segmentSection: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //questionButton1.titleLabel?.text = "Question 1"
         changeQuestion()
     }
     
     
     func changeQuestion() {
         
-        if let userResponse = userResponses[currentQuestionIndex] {
-            changeButtonColors(selectedButton: userResponse)
+        /// If going back to an already answered question, color the previous response
+        changeButtonColors(selectedButton: userResponses[currentQuestionIndex])
+        
+        guard let a = quiz?.getQuestions()[currentQuestionIndex].getResponseOptions() else {
+            return
         }
         
-        questionButton1.titleLabel?.text = quiz?.getQuestions()[currentQuestionIndex].getResponseOptions()[0]
-        questionButton2.titleLabel?.text = quiz?.getQuestions()[currentQuestionIndex].getResponseOptions()[1]
-        questionButton3.titleLabel?.text = quiz?.getQuestions()[currentQuestionIndex].getResponseOptions()[2]
-        questionButton4.titleLabel?.text = quiz?.getQuestions()[currentQuestionIndex].getResponseOptions()[3]
+        questionLabel.text = quiz?.getQuestions()[currentQuestionIndex].question
+        
+        questionButton1.setTitle(a[0], for: .normal)
+        questionButton2.setTitle(a[1], for: .normal)
+        questionButton3.setTitle(a[2], for: .normal)
+        questionButton4.setTitle(a[3], for: .normal)
     }
     
     
-    func changeButtonColors(selectedButton: Int) {
+    func changeButtonColors(selectedButton: Int?) {
         
-        questionButton1.tintColor = .brown
-        questionButton2.tintColor = .brown
-        questionButton3.tintColor = .brown
-        questionButton4.tintColor = .brown
-
+        questionButton1.configuration?.baseBackgroundColor = .brown
+        questionButton2.configuration?.baseBackgroundColor = .brown
+        questionButton3.configuration?.baseBackgroundColor = .brown
+        questionButton4.configuration?.baseBackgroundColor = .brown
+        
+        
         switch selectedButton {
             case 0:
-                questionButton1.tintColor = .blue
+                questionButton1.configuration?.baseBackgroundColor = .blue
             case 1:
-                questionButton2.tintColor = .blue
+                questionButton2.configuration?.baseBackgroundColor = .blue
             case 2:
-                questionButton3.tintColor = .blue
+                questionButton3.configuration?.baseBackgroundColor = .blue
             case 3:
-                questionButton4.tintColor = .blue
+                questionButton4.configuration?.baseBackgroundColor = .blue
             default:
                 break
         }
@@ -84,9 +92,31 @@ class QuestionViewController: UIViewController {
     }
     
     @IBAction func didChangeSegment(_ sender: Any) {
+        currentQuestionIndex = segmentSection.selectedSegmentIndex
+        changeQuestion()
     }
     @IBAction func submit(_ sender: Any) {
-        self.performSegue(withIdentifier: "resultsSegue", sender: self)
+        quiz?.markQuiz(userResponses: userResponses)
+        if let account = GlobalData.shared.signedInAccount {
+            let newCount = account.quizTakenCount!+1
+            let newScore = account.quizTotalScore!+(quiz?.score ?? 0)
+            let newPoints = account.points!+(quiz?.getPoints() ?? 0)
+            
+            DBHelper.dbhelper.updateAccountQuizResults(id: account.id!, quizTakenCount: newCount, quizTotalScore: newScore, points: newPoints)
+            
+            GlobalData.shared.signedInAccount?.quizTakenCount = newCount
+            GlobalData.shared.signedInAccount?.quizTotalScore = newScore
+            GlobalData.shared.signedInAccount?.points = newPoints
+        }
+        self.performSegue(withIdentifier: "resultsSegue", sender: quiz)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+ 
+        if (segue.identifier == "resultsSegue") {
+            let resultView = segue.destination as! ResultsViewController
+            let quiz = sender as! Quiz?
+            resultView.quiz = quiz
+        }
+    }
 }

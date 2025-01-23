@@ -31,8 +31,22 @@ class DBHelper {
     
     func createAccountTable() {
         
-        let sql = "CREATE TABLE IF NOT EXISTS account(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT, points INTEGER, time_account_created TEXT)"
+        let sql = "CREATE TABLE IF NOT EXISTS account(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT, points INTEGER, time_account_created TEXT, quiz_taken_count INTEGER, quiz_total_score INTEGER)"
         
+        if sqlite3_exec(db,sql,nil,nil,nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+    }
+    
+    
+    func alterAccountTable() {
+        var sql = "ALTER TABLE account ADD COLUMN quiz_taken_count INTEGER DEFAULT 0"
+        if sqlite3_exec(db,sql,nil,nil,nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        sql = "ALTER TABLE account ADD COLUMN quiz_total_score INTEGER DEFAULT 0"
         if sqlite3_exec(db,sql,nil,nil,nil) != SQLITE_OK {
             let err = String(cString: sqlite3_errmsg(db)!)
             print("An error occurred: \(err)")
@@ -42,7 +56,7 @@ class DBHelper {
     
     func insertAccount(email: NSString, password: NSString) {
         var stmt : OpaquePointer?
-        let query = "INSERT INTO account(email, password, points, time_account_created) values (?,?,?,?)"
+        let query = "INSERT INTO account(email, password, points, time_account_created, quiz_taken_count, quiz_total_score) values (?,?,?,?,?,?)"
         if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
             let err = String(cString: sqlite3_errmsg(db)!)
             print("An error occurred: \(err)")
@@ -69,12 +83,61 @@ class DBHelper {
             print("An error occurred: \(err)")
         }
         
+        if sqlite3_bind_int(stmt, 5, 0) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 6, 0) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
         if sqlite3_step(stmt) != SQLITE_DONE {
             let err = String(cString: sqlite3_errmsg(db)!)
             print("An error occurred: \(err)")
         } else {
             print("Account saved")
         }
+    }
+    
+    
+    func updateAccountQuizResults(id: Int32, quizTakenCount: Int, quizTotalScore: Int, points: Int) {
+        var stmt : OpaquePointer?
+        let query = "UPDATE account SET quiz_taken_count = ?, quiz_total_score = ?, points = ? WHERE id = ?"
+        
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 1, Int32(quizTakenCount)) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 2, Int32(quizTotalScore)) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+
+        if sqlite3_bind_int(stmt, 3, Int32(points)) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 4, id) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_step(stmt) != SQLITE_DONE {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        } else {
+            print("Account updated")
+        }
+        
     }
     
     
@@ -95,8 +158,10 @@ class DBHelper {
             let fetchedPassword = String(cString: sqlite3_column_text(stmt, 2))
             let fetchedPoints = Int(sqlite3_column_int(stmt, 3))
             let fetchedDate = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 4)))
+            let fetchedQuizCount = Int(sqlite3_column_int(stmt, 5))
+            let fetchedTotalScore = Int(sqlite3_column_int(stmt, 6))
             
-            let fetchedAccount = Account(id: id, email: fetchedEmail, password: fetchedPassword, points: fetchedPoints, timeAccountCreated: fetchedDate)
+            let fetchedAccount = Account(id: id, email: fetchedEmail, password: fetchedPassword, points: fetchedPoints, timeAccountCreated: fetchedDate, quizTakenCount: fetchedQuizCount, quizTotalScore: fetchedTotalScore)
             accountList.append(fetchedAccount)
         }
         
@@ -124,8 +189,10 @@ class DBHelper {
             let fetchedPassword = String(cString: sqlite3_column_text(stmt, 2))
             let fetchedPoints = Int(sqlite3_column_int(stmt, 3))
             let fetchedDate = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 4)))
+            let fetchedQuizCount = Int(sqlite3_column_int(stmt, 5))
+            let fetchedTotalScore = Int(sqlite3_column_int(stmt, 6))
             
-            fetchedAccount = Account(id: id, email: fetchedEmail, password: fetchedPassword, points: fetchedPoints, timeAccountCreated: fetchedDate)
+            fetchedAccount = Account(id: id, email: fetchedEmail, password: fetchedPassword, points: fetchedPoints, timeAccountCreated: fetchedDate, quizTakenCount: fetchedQuizCount, quizTotalScore: fetchedTotalScore)
         } else {
             print("Could not get account")
         }
@@ -136,6 +203,39 @@ class DBHelper {
     }
     
     
+    func fetchAccountByID(id: Int32) -> Account? {
+        var fetchedAccount : Account?
+        var stmt : OpaquePointer?
+        let query = "SELECT * FROM account WHERE id = ?"
+        
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 1, id) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_step(stmt) == SQLITE_ROW {
+            let id = sqlite3_column_int(stmt, 0)
+            let fetchedEmail = String(cString: sqlite3_column_text(stmt, 1))
+            let fetchedPassword = String(cString: sqlite3_column_text(stmt, 2))
+            let fetchedPoints = Int(sqlite3_column_int(stmt, 3))
+            let fetchedDate = ISO8601DateFormatter().date(from: String(cString: sqlite3_column_text(stmt, 4)))
+            let fetchedQuizCount = Int(sqlite3_column_int(stmt, 5))
+            let fetchedTotalScore = Int(sqlite3_column_int(stmt, 6))
+            
+            fetchedAccount = Account(id: id, email: fetchedEmail, password: fetchedPassword, points: fetchedPoints, timeAccountCreated: fetchedDate, quizTakenCount: fetchedQuizCount, quizTotalScore: fetchedTotalScore)
+        } else {
+            print("Could not get account")
+        }
+        
+        sqlite3_finalize(stmt)
+        
+        return fetchedAccount
+    }
     
     /// Notes
 

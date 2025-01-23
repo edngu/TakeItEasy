@@ -17,9 +17,12 @@ class ResultsViewController: UIViewController {
     @IBOutlet weak var numWrong: UILabel!
     @IBOutlet weak var numCorrect: UILabel!
     @IBOutlet weak var username: UILabel!
+
+    var quiz : Quiz?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setLabels()
         // Do any additional setup after loading the view.
     }
     
@@ -39,6 +42,20 @@ class ResultsViewController: UIViewController {
         backdropView1.layer.cornerRadius = 20
         backdropView2.layer.cornerRadius = 20
 
+    }
+    
+    
+    func setLabels() {
+        
+        if let points = quiz?.getPoints() {
+            numPoints.text = String(points)
+        }
+        
+        if let correct = quiz?.score {
+            numCorrect.text = String(correct)
+            numWrong.text = String((quiz?.getQuestions().count ?? 5) - correct)
+        }
+        
     }
 
 }

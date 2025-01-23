@@ -15,6 +15,7 @@ class Quiz {
     var questions : [QuizQuestion] = []
     var score : Int = 0
     
+    private var pointsMultiplier = 1000
     
     init(title: String = "", iconFileName: String = "") {
         self.title = title
@@ -41,15 +42,19 @@ class Quiz {
     }
     
     
-    func markQuiz(userResponses : [Int?]) -> Int {
+    func markQuiz(userResponses : [Int?]) {
+        score = 0
         var i = 0
         for question in questions {
             if let response = userResponses[i] {
-                score += question.getAnswerIndex() == userResponses[i] ? 1 : 0
+                score += question.getAnswerIndex() == response ? 1 : 0
             }
             i += 1
         }
-        return score
+    }
+    
+    func getPoints() -> Int {
+        return score * pointsMultiplier
     }
     
 }
