@@ -259,12 +259,14 @@ class DBHelper {
             print("An error occurred: \(err)")
         }
         
-        if sqlite3_bind_text(stmt, 1, NSString("New Note").utf8String, -1, nil) != SQLITE_OK {
+        let newNoteString = "New Note"
+        
+        if sqlite3_bind_text(stmt, 1, NSString(string: newNoteString).utf8String, -1, nil) != SQLITE_OK {
             let err = String(cString: sqlite3_errmsg(db)!)
             print("An error occurred: \(err)")
         }
         
-        if sqlite3_bind_text(stmt, 2, NSString("").utf8String, -1, nil) != SQLITE_OK {
+        if sqlite3_bind_text(stmt, 2, NSString(string: newNoteString).utf8String, -1, nil) != SQLITE_OK {
             let err = String(cString: sqlite3_errmsg(db)!)
             print("An error occurred: \(err)")
         }

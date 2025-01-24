@@ -32,7 +32,7 @@ class NotesViewController: UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        notesList = DBHelper.dbhelper.fetchAllNotesByAccount(account_id: 1)
+        notesList = DBHelper.dbhelper.fetchAllNotesByAccount(account_id: (GlobalData.shared.signedInAccount?.id)!)
         notesList.sort {$0.timeLastEdit! > $1.timeLastEdit!}
         searchData = notesList
         tableView.reloadData()
@@ -44,7 +44,7 @@ class NotesViewController: UIViewController{
     }
 
     @IBAction func addNewNote(_ sender: Any) {
-        let note = DBHelper.dbhelper.insertNote(accountID: 1)
+        let note = DBHelper.dbhelper.insertNote(accountID: (GlobalData.shared.signedInAccount?.id)!)
         if note != nil {
             notesList.insert(note!, at: 0)
             searchData = notesList
