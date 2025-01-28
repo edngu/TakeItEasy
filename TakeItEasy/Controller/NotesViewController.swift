@@ -39,7 +39,7 @@ class NotesViewController: UIViewController{
     }
     
     func setupUI(){
-        viewForTable.layer.cornerRadius = CGRectGetWidth(viewForTable.frame) / 10
+        viewForTable.layer.cornerRadius = 30
         
     }
 

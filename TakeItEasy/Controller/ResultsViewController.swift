@@ -38,9 +38,9 @@ class ResultsViewController: UIViewController {
     */
     
     func setupUI(){
-        backdropView0.layer.cornerRadius = 20
-        backdropView1.layer.cornerRadius = 20
-        backdropView2.layer.cornerRadius = 20
+        backdropView0.layer.cornerRadius = 30
+        backdropView1.layer.cornerRadius = 30
+        backdropView2.layer.cornerRadius = 30
 
     }
     
