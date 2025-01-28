@@ -11,6 +11,9 @@ class QuizViewController: UIViewController {
 
 
     @IBOutlet weak var quizInfoBackdropView: UIView!
+    @IBOutlet weak var backDropView1: UIView!
+    @IBOutlet weak var backDropView2: UIView!
+    @IBOutlet weak var backDropView3: UIView!
     @IBOutlet weak var quizCollectionView: UICollectionView!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var quizzesCompletedLabel: UILabel!
@@ -22,13 +25,18 @@ class QuizViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        quizInfoBackdropView.layer.cornerRadius = 20
+        setupUI()
         // Do any additional setup after loading the view.
         
         quizList.append(Quiz(title: "test1"))
         quizList.append(Quiz(title: "test2"))
         quizList.append(Quiz(title: "test3"))
         searchData = quizList
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.tabBarItem.image = UIImage(systemName: "questionmark.message")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,6 +73,13 @@ class QuizViewController: UIViewController {
         }
     }
     
+    func setupUI(){
+        quizInfoBackdropView.layer.cornerRadius = 30
+        backDropView1.layer.cornerRadius = 30
+        backDropView2.layer.cornerRadius = 30
+        backDropView3.layer.cornerRadius = 30
+    }
+    
 }
 
 extension QuizViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -78,10 +93,9 @@ extension QuizViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "quizCell", for: indexPath) as! QuizCollectionViewCell
-        cell.layer.cornerRadius = 20
+        cell.layer.cornerRadius = 30
         cell.quizTitle.text = searchData[indexPath.row].title
-        //cell.quizImage.image = UIImage(systemName: "trash.fill")
-        cell.quizBackDropView.layer.cornerRadius = 20
+        cell.quizBackDropView.layer.cornerRadius = 15
         return cell
     }
     

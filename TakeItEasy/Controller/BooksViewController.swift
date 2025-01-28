@@ -10,6 +10,7 @@ import UIKit
 class BooksViewController: UIViewController {
 
     var booksList: [BookAPIHelper.BookModel] = []
+    @IBOutlet weak var titleLabelBackDropView: UIView!
     @IBOutlet weak var username: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,8 +47,8 @@ extension BooksViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookcell", for: indexPath) as! BookCollectionViewCell
         cell.bookTitleLabel?.text = booksList[indexPath.row].title
-        cell.layer.cornerRadius = 20
-        cell.bookTitleLabel.layer.cornerRadius = 20
+        cell.layer.cornerRadius = 30
+        cell.bookBackdropView.layer.cornerRadius = 15
         return cell
     }
     

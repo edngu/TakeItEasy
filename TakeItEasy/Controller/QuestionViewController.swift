@@ -9,6 +9,7 @@ import UIKit
 
 class QuestionViewController: UIViewController {
 
+    @IBOutlet weak var backDropView: UIView!
     @IBOutlet weak var questionButton1: UIButton!
     @IBOutlet weak var questionButton2: UIButton!
     @IBOutlet weak var questionButton3: UIButton!
@@ -25,6 +26,8 @@ class QuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backDropView.layer.cornerRadius = 30
+        
         changeQuestion()
     }
     
@@ -49,21 +52,21 @@ class QuestionViewController: UIViewController {
     
     func changeButtonColors(selectedButton: Int?) {
         
-        questionButton1.configuration?.baseBackgroundColor = .brown
-        questionButton2.configuration?.baseBackgroundColor = .brown
-        questionButton3.configuration?.baseBackgroundColor = .brown
-        questionButton4.configuration?.baseBackgroundColor = .brown
+        questionButton1.configuration?.baseBackgroundColor = .light
+        questionButton2.configuration?.baseBackgroundColor = .light
+        questionButton3.configuration?.baseBackgroundColor = .light
+        questionButton4.configuration?.baseBackgroundColor = .light
         
         
         switch selectedButton {
             case 0:
-                questionButton1.configuration?.baseBackgroundColor = .blue
+                questionButton1.configuration?.baseBackgroundColor = .medium
             case 1:
-                questionButton2.configuration?.baseBackgroundColor = .blue
+                questionButton2.configuration?.baseBackgroundColor = .medium
             case 2:
-                questionButton3.configuration?.baseBackgroundColor = .blue
+                questionButton3.configuration?.baseBackgroundColor = .medium
             case 3:
-                questionButton4.configuration?.baseBackgroundColor = .blue
+                questionButton4.configuration?.baseBackgroundColor = .medium
             default:
                 break
         }
