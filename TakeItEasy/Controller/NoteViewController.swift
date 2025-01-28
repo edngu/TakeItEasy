@@ -31,12 +31,11 @@ class NoteViewController: UIViewController {
     }
     
     
-    // Save notes here temporarily. Potentially add save button.
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         if let id = note?.id {
-            //DBHelper.dbhelper.updateNoteTitle(id: id, title: noteName.text! as NSString)
+            DBHelper.dbhelper.updateNoteTitle(id: id, title: getFirstLine() as NSString)
             DBHelper.dbhelper.updateNoteContent(id: id, content: text.text! as NSString)
         } else {
             print("Note changes not saved")
@@ -44,16 +43,26 @@ class NoteViewController: UIViewController {
         
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func getFirstLine() -> String {
+        guard !text.text.isEmpty else {
+            return ""
+        }
+        
+        var firstLine : String = ""
+        
+        if let end = text.text.firstIndex(of: "\n") {
+            firstLine = text.text.substring(to: end)
+        } else if text.text.count > 30 {
+            firstLine = text.text.substring(to: text.text.index(text.text.startIndex, offsetBy: 30))
+        } else {
+            firstLine = text.text
+        }
+        
+        return firstLine
     }
-    */
+    
+
     
     func setupUI(){
         text.layer.cornerRadius = 30
