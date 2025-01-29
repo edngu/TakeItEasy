@@ -70,8 +70,6 @@ class NotesViewController: UIViewController{
         }
     }
     
-    
-    
 }
 
 extension NotesViewController: UITableViewDataSource, UITableViewDelegate{
