@@ -611,7 +611,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bookcell" id="oYl-Lc-fcI" userLabel="bookCell" customClass="BookCollectionViewCell" customModule="TakeItEasy" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bookcell1" id="oYl-Lc-fcI" userLabel="bookCell" customClass="BookCollectionViewCell" customModule="TakeItEasy" customModuleProvider="target">
                                         <rect key="frame" x="8" y="15" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="BPL-fI-cwc">
@@ -678,7 +678,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bookcell" id="avr-E0-66s" userLabel="bookCell" customClass="BookCollectionViewCell" customModule="TakeItEasy" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bookcell2" id="avr-E0-66s" userLabel="bookCell" customClass="BookCollectionViewCell" customModule="TakeItEasy" customModuleProvider="target">
                                         <rect key="frame" x="8" y="15" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="JCc-bO-vLt">
@@ -731,7 +731,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bookcell" id="nuj-qa-NLC" userLabel="bookCell" customClass="BookCollectionViewCell" customModule="TakeItEasy" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bookcell3" id="nuj-qa-NLC" userLabel="bookCell" customClass="BookCollectionViewCell" customModule="TakeItEasy" customModuleProvider="target">
                                         <rect key="frame" x="8" y="15" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="O2L-cX-ylk">
@@ -815,6 +815,9 @@
                         <barButtonItem key="leftBarButtonItem" title="Log Out" id="i2F-IB-w8o"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="collectionView1" destination="LK0-Nh-ol4" id="mtg-9N-sgC"/>
+                        <outlet property="collectionView2" destination="cI0-UW-bBL" id="r83-gk-btL"/>
+                        <outlet property="collectionView3" destination="NDu-AW-scf" id="T57-1K-iIG"/>
                         <outlet property="username" destination="PVR-vT-YoH" id="dfA-q4-PD5"/>
                         <segue destination="fdW-2A-SRu" kind="show" identifier="bookSegue" id="BKR-cT-ENn"/>
                     </connections>
