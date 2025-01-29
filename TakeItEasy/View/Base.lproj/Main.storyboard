@@ -109,7 +109,7 @@
         <!--Login-->
         <scene sceneID="avg-6O-tEB">
             <objects>
-                <viewController title="Login" id="coU-lW-YWN" customClass="LoginViewController" customModule="TakeItEasy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="logincontroller" title="Login" id="coU-lW-YWN" customClass="LoginViewController" customModule="TakeItEasy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LEL-4W-DbD">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -456,7 +456,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Quiz" id="kJv-LJ-mA0"/>
                     <navigationItem key="navigationItem" title="Quizzes" id="fh6-Gh-ypa">
-                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="ni2-iw-rmC"/>
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="ni2-iw-rmC">
+                            <connections>
+                                <action selector="logOut:" destination="iDP-f3-oFp" id="96j-Kn-hes"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="averageScoreLabel" destination="x1L-G6-SAP" id="G4T-cV-9Dg"/>
@@ -563,7 +567,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="ffc-w6-OkK"/>
                     <navigationItem key="navigationItem" title="Notes" id="Jmy-r3-ble">
-                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="Kyh-mP-0wX"/>
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="Kyh-mP-0wX">
+                            <connections>
+                                <action selector="logOut:" destination="dEw-Yj-OI1" id="FX1-Q8-WIw"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="square.and.pencil" catalog="system" id="aDx-jM-9bf">
                             <connections>
                                 <action selector="addNewNote:" destination="dEw-Yj-OI1" id="sBz-I9-277"/>
@@ -812,7 +820,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Books" id="wDN-oC-waO"/>
                     <navigationItem key="navigationItem" title="Books" id="bpG-Zv-LDk">
-                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="i2F-IB-w8o"/>
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="i2F-IB-w8o">
+                            <connections>
+                                <action selector="logOut:" destination="Y87-2S-LeX" id="EsT-GH-vXZ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView1" destination="LK0-Nh-ol4" id="mtg-9N-sgC"/>
@@ -1272,7 +1284,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Nvi-cn-YJO"/>
+        <segue reference="PGT-N1-dhD"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="square.and.pencil" catalog="system" width="128" height="121"/>

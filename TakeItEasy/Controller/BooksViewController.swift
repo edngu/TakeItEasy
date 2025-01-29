@@ -50,6 +50,18 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
         }
     }
     
+    @IBAction func logOut(_ sender: Any) {
+        
+        if let vcA = self.storyboard?.instantiateViewController(withIdentifier: "logincontroller") as? LoginViewController {
+            
+            self.view.window?.rootViewController = vcA
+            self.view.window?.makeKeyAndVisible()
+        }
+    
+    }
+    
+    
+    
     
     
     
@@ -125,7 +137,6 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "bookSegue", sender: booksList[indexPath.row])
     }
-    
     
     
 }

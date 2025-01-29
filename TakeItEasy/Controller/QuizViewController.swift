@@ -84,6 +84,16 @@ class QuizViewController: UIViewController {
         }
     }
     
+    @IBAction func logOut(_ sender: Any) {
+        if let vcA = self.storyboard?.instantiateViewController(withIdentifier: "logincontroller") as? LoginViewController {
+            
+            self.view.window?.rootViewController = vcA
+            self.view.window?.makeKeyAndVisible()
+        }
+    }
+    
+    
+    
     func setupUI(){
         quizInfoBackdropView.layer.cornerRadius = 30
         backDropView1.layer.cornerRadius = 30
