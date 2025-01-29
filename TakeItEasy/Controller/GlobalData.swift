@@ -14,5 +14,4 @@ class GlobalData {
     
     var signedInAccount: Account?
     
-    
 }
