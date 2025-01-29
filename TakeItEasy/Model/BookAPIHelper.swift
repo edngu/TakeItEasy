@@ -19,6 +19,7 @@ class BookAPIHelper {
         let author_name: [String?]
         let subject: [String?]
         let cover_edition_key: String?
+        let cover_i: Int?
         var thumbnail_url: String?
         var preview_url: String?
         var download_url: String?
@@ -33,10 +34,10 @@ class BookAPIHelper {
     func searchBooks() {
         
         let parameters: [String: String] = [
-            "subject": "cooking",
+            "subject": "fiction,nonfiction",
             "ebook_access": "public",
-            "limit": "10",
-            "fields": "cover_edition_key,title,author_name,subject"
+            "limit": "25",
+            "fields": "cover_edition_key,cover_i,title,author_name,subject"
         ]
         
         var urlComponents = URLComponents(string: "https://openlibrary.org/search.json")!
@@ -112,11 +113,18 @@ class BookAPIHelper {
                     
                     var nilIndexes: [Int] = []
                     for i in 0..<self.fetchedBookData.count {
+                        guard let _ = self.fetchedBookData[i].cover_edition_key else {
+                            nilIndexes.append(i)
+                            continue
+                        }
                         guard json[self.fetchedBookData[i].cover_edition_key!]!["preview"] == "full" else {
                             nilIndexes.append(i)
                             continue
                         }
-                        self.fetchedBookData[i].thumbnail_url = json[self.fetchedBookData[i].cover_edition_key!]!["thumbnail_url"]
+                        
+                        //self.fetchedBookData[i].thumbnail_url = json[self.fetchedBookData[i].cover_edition_key!]!["thumbnail_url"]
+                        let coverID = self.fetchedBookData[i].cover_i!//String(json[self.fetchedBookData[i].cover_edition_key!]!["cover_i"])
+                        self.fetchedBookData[i].thumbnail_url = "https://covers.openlibrary.org/b/id/\(coverID)-L.jpg"
                         self.fetchedBookData[i].preview_url = json[self.fetchedBookData[i].cover_edition_key!]!["preview_url"]
                         
                         let bookID = json[self.fetchedBookData[i].cover_edition_key!]!["preview_url"]?.split(separator: "/").last

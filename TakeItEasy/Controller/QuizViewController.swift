@@ -26,7 +26,7 @@ class QuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        // Do any additional setup after loading the view.
+        username.text = GlobalData.shared.signedInAccount?.email
         
         quizList.append(Quiz(title: "test1"))
         quizList.append(Quiz(title: "test2"))
