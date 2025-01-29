@@ -9,7 +9,9 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    let userDefault = UserDefaults.standard
     
+    @IBOutlet weak var alertLabel: UILabel!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var rememberMe: UISwitch!
@@ -26,16 +28,28 @@ class LoginViewController: UIViewController {
         //QuizDBHelper.shared.addMathQuiz()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        alertLabel.isHidden = true
+        
+        let rememberedAccount = getRememberAccount()
+        
+        if rememberedAccount.1 {
+            let data = getKey(username: rememberedAccount.0)
+            if let username = data.0 {
+                email.text = username
+            }
+            if let pwd = data.1 {
+                password.text = pwd
+            }
+        } else {
+            email.text = ""
+            password.text = ""
+        }
     }
-    */
+    
     
     //Send over username text to registration page
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -46,15 +60,68 @@ class LoginViewController: UIViewController {
     }
     
     
+    func saveRememberAccount(username: String) {
+        if rememberMe.isOn {
+            userDefault.set(username.lowercased(), forKey: "username")
+        } else {
+            userDefault.set("", forKey: "username")
+        }
+        
+        userDefault.set(rememberMe.isOn, forKey: "remember")
+    }
+    
+    
+    func getRememberAccount() -> (String, Bool){
+        let userID = userDefault.string(forKey: "username")
+        let state = userDefault.bool(forKey: "remember")
+        
+        if userID != nil {
+            return (userID!, state)
+        }
+        return ("", false)
+        
+    }
+
+    
+    func getKey(username: String) -> (String?, String?) {
+        let request : [String : Any] = [
+            kSecClass as String : kSecClassGenericPassword,
+            kSecAttrAccount as String : username,
+            kSecReturnAttributes as String : true,
+            kSecReturnData as String : true
+        ]
+        var response : CFTypeRef?
+        
+        if SecItemCopyMatching(request as CFDictionary, &response) == noErr {
+            let data = response as? [String : Any]
+            let userID = data?[kSecAttrAccount as String] as? String
+            let password = (data![kSecValueData as String] as? Data)!
+            let passStr = String(data: password, encoding: .utf8)
+            return (userID!, passStr!)
+        }
+        return ("", "")
+    }
+    
+    
+    func validate(username: String, password: String) -> Bool {
+        let usernameLowercased = username.lowercased()
+        if let account = DBHelper.dbhelper.fetchAccountByEmail(email: usernameLowercased as NSString) {
+            return account.password == password
+        }
+        return false
+    }
+    
+    
     @IBAction func login(_ sender: Any) {
         
-        /// replace later with actual login
-        if let a = DBHelper.dbhelper.fetchAccountByID(id: 1) {
-            a.password = ""
-            GlobalData.shared.signedInAccount = a
-        } else {
-            GlobalData.shared.signedInAccount = Account(id: 1, email: "", password: "", points: 0, timeAccountCreated: nil, quizTakenCount: 0, quizTotalScore: 0)
+        guard validate(username: email.text!, password: password.text!) else {
+            alertLabel.isHidden = false
+            print("Unable to login")
+            return
         }
+        
+        saveRememberAccount(username: email.text!)
+        GlobalData.shared.signedInAccount = DBHelper.dbhelper.fetchAccountByEmail(email: email.text!.lowercased() as NSString)
         self.performSegue(withIdentifier: "loginSegue", sender: nil)
     }
     
