@@ -60,6 +60,18 @@ class NotesViewController: UIViewController{
             noteView.note = note
         }
     }
+    
+    @IBAction func logOut(_ sender: Any) {
+        
+        if let vcA = self.storyboard?.instantiateViewController(withIdentifier: "logincontroller") as? LoginViewController {
+            
+            self.view.window?.rootViewController = vcA
+            self.view.window?.makeKeyAndVisible()
+        }
+    }
+    
+    
+    
 }
 
 extension NotesViewController: UITableViewDataSource, UITableViewDelegate{
