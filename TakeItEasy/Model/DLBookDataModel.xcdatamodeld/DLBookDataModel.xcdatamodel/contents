@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="23H222" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="DLBook" representedClassName="DLBook" syncable="YES" codeGenerationType="class">
+        <attribute name="fileextension" optional="YES" attributeType="String"/>
+        <attribute name="filename" optional="YES" attributeType="String"/>
+        <attribute name="iconextension" optional="YES" attributeType="String"/>
+        <attribute name="iconname" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
+</model>

@@ -54,14 +54,14 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
         booksList2 = BookAPIHelper.shared.getBookBySubject(subject: "Fiction")
         
         booksList3 = []
-        var bookA = BookAPIHelper.BookModel(title: "Green Eggs and Ham", author_name: ["Dr. Suess"], subject: [], cover_edition_key: nil, cover_i: nil)
-        bookA.download_url = Bundle.main.path(forResource: "greeneggsham", ofType: "pdf")
-        bookA.thumbnail_url = Bundle.main.path(forResource: "greeneggsandham", ofType: "png")
-        var bookB = BookAPIHelper.BookModel(title: "Cinderella", author_name: [], subject: [], cover_edition_key: nil, cover_i: nil)
-        bookB.download_url = Bundle.main.path(forResource: "cinderella", ofType: "pdf")
-        bookB.thumbnail_url = Bundle.main.path(forResource: "princess", ofType: "png")
-        booksList3.append(bookA)
-        booksList3.append(bookB)
+        
+        let DLBookList = DLBookDBHelper.shared.getAllBooks()
+        for b in DLBookList {
+            var book = BookAPIHelper.BookModel(title: b.title, author_name: [], subject: [], cover_edition_key: nil, cover_i: nil)
+            book.download_url = Bundle.main.path(forResource: b.filename, ofType: b.fileextension)
+            book.thumbnail_url = Bundle.main.path(forResource: b.iconname, ofType: b.iconextension)
+            booksList3.append(book)
+        }
         
         booklist1SearchData = booksList1
         booklist2SearchData = booksList2
