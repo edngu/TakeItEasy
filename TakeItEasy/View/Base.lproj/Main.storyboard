@@ -169,6 +169,13 @@
                                 </constraints>
                                 <color key="onTintColor" name="lightColor"/>
                             </switch>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Unable to Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scf-jl-OUu">
+                                <rect key="frame" x="65" y="379" width="120" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="pTr-RQ-2jR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -192,6 +199,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Ztz-Ca-50Y"/>
                     <connections>
+                        <outlet property="alertLabel" destination="scf-jl-OUu" id="WKN-G4-gGR"/>
                         <outlet property="email" destination="p81-Mj-5cp" id="cM0-0X-fsc"/>
                         <outlet property="password" destination="aCv-bg-1JQ" id="L6H-zv-6Hu"/>
                         <outlet property="rememberMe" destination="5S9-NE-yOv" id="sS8-BS-y1a"/>
@@ -1278,7 +1286,7 @@
             <color red="0.2630000114440918" green="0.15999999642372131" blue="0.22699999809265137" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="lightColor">
-            <color red="0.42177287581699341" green="0.27775749553693918" blue="0.37178431636317755" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.42199999094009399" green="0.27799999713897705" blue="0.37200000882148743" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="mediumColor">
             <color red="0.3449999988079071" green="0.23000000417232513" blue="0.31000000238418579" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -1287,10 +1295,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tableCellBlueTextColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

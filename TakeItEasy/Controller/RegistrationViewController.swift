@@ -91,6 +91,45 @@ class RegistrationViewController: UIViewController {
     }
     
     
+    func saveKey(username: String, password: String) {
+        let attributes: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: username.lowercased(),
+            kSecValueData as String : password.data(using: .utf8)!]
+        
+        if SecItemAdd(attributes as CFDictionary, nil) == errSecSuccess {
+            print("data saved successfully")
+        } else {
+            print("data not saved")
+        }
+    }
+    
+    
+    func getKey(username: String) -> (String?, String?) {
+        let request : [String : Any] = [
+            kSecClass as String : kSecClassGenericPassword,
+            kSecAttrAccount as String : username.lowercased(),
+            kSecReturnAttributes as String : true,
+            kSecReturnData as String : true
+        ]
+        var response : CFTypeRef?
+        
+        if SecItemCopyMatching(request as CFDictionary, &response) == noErr {
+            let data = response as? [String : Any]
+            let userID = data?[kSecAttrAccount as String] as? String
+            let password = (data![kSecValueData as String] as? Data)!
+            let passStr = String(data: password, encoding: .utf8)
+            return (userID!, passStr!)
+        }
+        return ("", "")
+    }
+    
+    
+    func saveAccount(username: String, password: String) {
+        let usernameLowercased = username.lowercased()
+        DBHelper.dbhelper.insertAccount(email: usernameLowercased as NSString, password: password as NSString)
+        saveKey(username: usernameLowercased, password: password)
+    }
     
     @IBAction func register(_ sender: Any) {
         
@@ -103,13 +142,12 @@ class RegistrationViewController: UIViewController {
             return
         }
         
-        DBHelper.dbhelper.insertAccount(email: email.text!.lowercased() as NSString, password: password.text! as NSString)
+        saveAccount(username: email.text!, password: password.text!)
+        //DBHelper.dbhelper.insertAccount(email: email.text!.lowercased() as NSString, password: password.text! as NSString)
         
         print("User created, data saved successfully")
-        /*let p = DBHelper.dbhelper.fetchAllAccounts()
-        for a in p {
-            print("\(a.email), \(a.password), \(a.points), \(a.time_account_created)")
-        }*/
+        GlobalData.shared.signedInAccount = DBHelper.dbhelper.fetchAccountByEmail(email: email.text! as NSString)
+        
         self.navigationController?.popViewController(animated: true)
         self.performSegue(withIdentifier: "tabSegue", sender: nil)
          
