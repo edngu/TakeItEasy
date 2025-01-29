@@ -42,6 +42,10 @@ extension BooksViewController: UICollectionViewDelegate, UICollectionViewDataSou
         return booksList.count
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 3
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 128, height: 128)
     }

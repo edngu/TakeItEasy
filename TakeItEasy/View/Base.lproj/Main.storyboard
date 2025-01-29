@@ -882,14 +882,13 @@
             </objects>
             <point key="canvasLocation" x="-280.15267175572518" y="1831.6901408450706"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Custom Tab Bar Controller-->
         <scene sceneID="ZyA-XK-oFf">
             <objects>
-                <tabBarController modalPresentationStyle="fullScreen" id="hYm-Pj-oa6" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="SPx-Ep-mTD">
+                <tabBarController modalPresentationStyle="fullScreen" id="hYm-Pj-oa6" customClass="CustomTabBarController" customModule="TakeItEasy" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="SPx-Ep-mTD">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="ORi-ou-v8T" kind="relationship" relationship="viewControllers" id="ce3-f4-6Le"/>
