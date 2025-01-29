@@ -26,6 +26,7 @@ class QuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        username.text = GlobalData.shared.signedInAccount?.email
         backDropView.layer.cornerRadius = 30
         
         changeQuestion()

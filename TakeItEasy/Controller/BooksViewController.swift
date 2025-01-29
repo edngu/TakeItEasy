@@ -15,6 +15,8 @@ class BooksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        username.text = GlobalData.shared.signedInAccount?.email
+        
         booksList = BookAPIHelper.shared.fetchedBookData
         // Do any additional setup after loading the view.
     }

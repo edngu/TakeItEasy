@@ -23,7 +23,7 @@ class ResultsViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setLabels()
-        // Do any additional setup after loading the view.
+        username.text = GlobalData.shared.signedInAccount?.email
     }
     
 

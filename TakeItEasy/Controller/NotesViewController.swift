@@ -22,7 +22,7 @@ class NotesViewController: UIViewController{
         // Do any additional setup after loading the view.
         self.title = "Notes"
 
-        
+        username.text = GlobalData.shared.signedInAccount?.email
     }
     
     override func awakeFromNib() {

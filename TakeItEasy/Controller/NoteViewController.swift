@@ -19,7 +19,8 @@ class NoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        // Do any additional setup after loading the view.
+        
+        username.text = GlobalData.shared.signedInAccount?.email
     }
     
     
