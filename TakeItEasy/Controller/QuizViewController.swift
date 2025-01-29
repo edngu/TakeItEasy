@@ -27,10 +27,21 @@ class QuizViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         username.text = GlobalData.shared.signedInAccount?.email
+        //print(QuizDBHelper.shared.getAllQuizzes())
+        let quizzes = QuizDBHelper.shared.getAllQuizzes()
         
+        for quiz in quizzes {
+            guard let t = quiz.title else {
+                continue
+            }
+            quizList.append(Quiz(title: t, iconFileName: quiz.iconfile!, questionSet: quiz.questions!))
+        }
+        
+        // Temporary, quiz wont show up if there is only 1 quiz
         quizList.append(Quiz(title: "test1"))
-        quizList.append(Quiz(title: "test2"))
-        quizList.append(Quiz(title: "test3"))
+        //quizList.append(Quiz(title: "test2"))
+        //quizList.append(Quiz(title: "test3"))
+        
         searchData = quizList
     }
     
@@ -100,6 +111,7 @@ extension QuizViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        searchData[indexPath.row].randomizeQuestions()
         self.performSegue(withIdentifier: "questionSegue", sender: searchData[indexPath.row])
     }
     

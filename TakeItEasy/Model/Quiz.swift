@@ -14,6 +14,7 @@ class Quiz {
     var iconFileName = ""
     var questions : [QuizQuestion] = []
     var score : Int = 0
+    var potentialQuestions : [QuizQuestion] = []
     
     private var pointsMultiplier = 1000
     
@@ -23,6 +24,43 @@ class Quiz {
         generateQuestions()
     }
     
+    init(title: String = "", iconFileName: String = "", questionSet : NSSet) {
+        
+        var qArray : [QuizQuestion] = []
+        for que in questionSet {
+            let q = que as! CDQuestion
+            
+            var filler : [String] = []
+            for resp in q.responses! {
+                let r = resp as! CDResponse
+                filler.append(r.response!)
+            }
+                            
+            let question = QuizQuestion(question: q.question!, answer: q.answer!, fillerResponses: filler)
+                                
+            qArray.append(question)
+        }
+        
+        
+        self.title = title
+        self.iconFileName = iconFileName
+        self.potentialQuestions = qArray
+        
+        randomizeQuestions()
+    }
+    
+
+    func randomizeQuestions() {
+        questions = potentialQuestions
+        
+        while questions.count > 5 {
+            let i = Int.random(in: 0..<questions.count)
+            questions.remove(at: i)
+        }
+        
+        questions = questions.shuffled()
+        
+    }
     
     func generateQuestions() {
         
