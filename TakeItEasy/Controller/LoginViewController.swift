@@ -23,7 +23,7 @@ class LoginViewController: UIViewController {
         DBHelper.dbhelper.createNoteTable()
         DBHelper.dbhelper.alterAccountTable()
         BookAPIHelper.shared.searchBooks()
-        
+        //QuizDBHelper.shared.addMathQuiz()
     }
     
 

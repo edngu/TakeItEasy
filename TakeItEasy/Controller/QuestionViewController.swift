@@ -42,6 +42,7 @@ class QuestionViewController: UIViewController {
             return
         }
         
+        navigationItem.title = "Question #\(currentQuestionIndex+1)"
         questionLabel.text = quiz?.getQuestions()[currentQuestionIndex].question
         
         questionButton1.setTitle(a[0], for: .normal)
