@@ -46,6 +46,7 @@ extension BooksViewController: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookcell", for: indexPath) as! BookCollectionViewCell
+        cell.bookTitleLabel?.text = booksList[indexPath.row].title
         
         if let thumbnailURL = booksList[indexPath.row].thumbnail_url, let thumbnail = URL(string: thumbnailURL) {
             let session = URLSession(configuration: .default)
