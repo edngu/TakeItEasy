@@ -9,21 +9,27 @@ import UIKit
 
 class BooksViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
-    var booksList: [BookAPIHelper.BookModel] = []
+    //var booksList: [BookAPIHelper.BookModel] = []
     @IBOutlet weak var titleLabelBackDropView: UIView!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var collectionView1: UICollectionView!
     @IBOutlet weak var collectionView2: UICollectionView!
     @IBOutlet weak var collectionView3: UICollectionView!
-    var booksList1 : [String] = ["1","2","3","4","5","6","7","8","9","10"]
-    var booksList2 : [String] = ["11","12","13","14","15","16","17","18","19","20"]
-    var booksList3 : [String] = ["21","22","23","24","25","26","27","28","29","30"]
+    
+    var booksList1 : [BookAPIHelper.BookModel] = []
+    var booksList2 : [BookAPIHelper.BookModel] = []
+    var booksList3 : [BookAPIHelper.BookModel] = []
+    var booklist1SearchData : [BookAPIHelper.BookModel] = []
+    var booklist2SearchData : [BookAPIHelper.BookModel] = []
+    var booklist3SearchData : [BookAPIHelper.BookModel] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         username.text = GlobalData.shared.signedInAccount?.email
-        booksList = BookAPIHelper.shared.fetchedBookData
-       
+        //booksList = BookAPIHelper.shared.fetchedBookData
+        getBookValues()
+        
         collectionView1.delegate = self
         collectionView2.delegate = self
         collectionView3.delegate = self
@@ -35,11 +41,33 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
         
         
     }
+
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.tabBarItem.image = UIImage(systemName: "book")
 
     }
+    
+    func getBookValues() {
+        booksList1 = BookAPIHelper.shared.getBookBySubject(subject: "Nonfiction")
+        booksList2 = BookAPIHelper.shared.getBookBySubject(subject: "Fiction")
+        
+        booksList3 = []
+        var bookA = BookAPIHelper.BookModel(title: "Green Eggs and Ham", author_name: ["Dr. Suess"], subject: [], cover_edition_key: nil, cover_i: nil)
+        bookA.download_url = Bundle.main.path(forResource: "greeneggsham", ofType: "pdf")
+        bookA.thumbnail_url = Bundle.main.path(forResource: "greeneggsandham", ofType: "png")
+        var bookB = BookAPIHelper.BookModel(title: "Cinderella", author_name: [], subject: [], cover_edition_key: nil, cover_i: nil)
+        bookB.download_url = Bundle.main.path(forResource: "cinderella", ofType: "pdf")
+        bookB.thumbnail_url = Bundle.main.path(forResource: "princess", ofType: "png")
+        booksList3.append(bookA)
+        booksList3.append(bookB)
+        
+        booklist1SearchData = booksList1
+        booklist2SearchData = booksList2
+        booklist3SearchData = booksList3
+    }
+    
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
  
@@ -68,11 +96,11 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //return booksList.count
         if collectionView == self.collectionView1 {
-            return booksList1.count
+            return booklist1SearchData.count
         } else if collectionView == self.collectionView2 {
-            return booksList2.count
+            return booklist2SearchData.count
         } else if collectionView == self.collectionView3 {
-            return booksList3.count
+            return booklist3SearchData.count
         }
         return 0
     }
@@ -89,21 +117,60 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
         
         if collectionView == self.collectionView1 {
             let cell1 = collectionView.dequeueReusableCell(withReuseIdentifier: "bookcell1", for: indexPath) as! BookCollectionViewCell
-            cell1.bookTitleLabel?.text = booksList1[indexPath.row]
+            cell1.bookTitleLabel?.text = booklist1SearchData[indexPath.row].title
             cell1.layer.cornerRadius = 30
             cell1.bookBackdropView.layer.cornerRadius = 15
+            
+            if let thumbnailURL = booklist1SearchData[indexPath.row].thumbnail_url, let thumbnail = URL(string: thumbnailURL) {
+                let session = URLSession(configuration: .default)
+            
+                let downloadImageTask = session.dataTask(with: thumbnail) { data, response, error in
+                    if let error = error {
+                        print("Error getting thumbnail")
+                        return
+                    }
+            
+                    if let imageData = data {
+                        DispatchQueue.main.async {
+                            cell1.bookImage.image = UIImage(data: imageData)
+                        }
+                    }
+                }
+                downloadImageTask.resume()
+            }
             return cell1
         } else if collectionView == self.collectionView2 {
             let cell2 = collectionView.dequeueReusableCell(withReuseIdentifier: "bookcell2", for: indexPath) as! BookCollectionViewCell
-            cell2.bookTitleLabel?.text = booksList2[indexPath.row]
+            cell2.bookTitleLabel?.text = booklist2SearchData[indexPath.row].title
             cell2.layer.cornerRadius = 30
             cell2.bookBackdropView.layer.cornerRadius = 15
+            
+            if let thumbnailURL = booklist2SearchData[indexPath.row].thumbnail_url, let thumbnail = URL(string: thumbnailURL) {
+                let session = URLSession(configuration: .default)
+            
+                let downloadImageTask = session.dataTask(with: thumbnail) { data, response, error in
+                    if let error = error {
+                        print("Error getting thumbnail")
+                        return
+                    }
+            
+                    if let imageData = data {
+                        DispatchQueue.main.async {
+                            cell2.bookImage.image = UIImage(data: imageData)
+                        }
+                    }
+                }
+                downloadImageTask.resume()
+            }
             return cell2
         } else {
             let cell3 = collectionView.dequeueReusableCell(withReuseIdentifier: "bookcell3", for: indexPath) as! BookCollectionViewCell
-            cell3.bookTitleLabel?.text = booksList3[indexPath.row]
+            cell3.bookTitleLabel?.text = booklist3SearchData[indexPath.row].title
             cell3.layer.cornerRadius = 30
             cell3.bookBackdropView.layer.cornerRadius = 15
+            if let imageName = booklist3SearchData[indexPath.row].thumbnail_url {
+                cell3.bookImage.image = UIImage(named: imageName)
+            }
             return cell3
         }
         
@@ -135,7 +202,17 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "bookSegue", sender: booksList[indexPath.row])
+        switch collectionView {
+            case self.collectionView1:
+            self.performSegue(withIdentifier: "bookSegue", sender: booklist1SearchData[indexPath.row])
+            case self.collectionView2:
+            self.performSegue(withIdentifier: "bookSegue", sender: booklist2SearchData[indexPath.row])
+            case self.collectionView3:
+            self.performSegue(withIdentifier: "bookSegue", sender: booklist3SearchData[indexPath.row])
+            default:
+                break
+        }
+        
     }
     
     
@@ -210,3 +287,27 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
 //    
 //    
 //}
+
+extension BooksViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        booklist1SearchData = getFilteredData(searchText: searchText, bookArray: booksList1)
+        booklist2SearchData = getFilteredData(searchText: searchText, bookArray: booksList2)
+        booklist3SearchData = getFilteredData(searchText: searchText, bookArray: booksList3)
+        
+        collectionView1.reloadData()
+        collectionView2.reloadData()
+        collectionView3.reloadData()
+    }
+    
+    
+    func getFilteredData(searchText: String, bookArray: [BookAPIHelper.BookModel]) -> [BookAPIHelper.BookModel] {
+        var filteredData = searchText.isEmpty ? bookArray : bookArray.filter {
+            (book: BookAPIHelper.BookModel) -> Bool in
+            return book.title?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+        }
+        
+        return filteredData
+    }
+
+}

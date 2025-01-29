@@ -17,7 +17,7 @@ class BookAPIHelper {
     struct BookModel: Decodable {
         let title: String?
         let author_name: [String?]
-        let subject: [String?]
+        let subject: [String]
         let cover_edition_key: String?
         let cover_i: Int?
         var thumbnail_url: String?
@@ -73,7 +73,7 @@ class BookAPIHelper {
     }
     
     
-    func getBookData() {
+    private func getBookData() {
         
         var ids = ""
         for b in fetchedBookData {
@@ -145,5 +145,12 @@ class BookAPIHelper {
         task.resume()
     }
     
+    
+    func getBookBySubject(subject: String) -> [BookModel] {
+        return fetchedBookData.filter {
+            (book: BookModel) -> Bool in
+            return book.subject.contains(subject)
+        }
+    }
     
 }
