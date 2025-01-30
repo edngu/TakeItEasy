@@ -27,8 +27,9 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
         super.viewDidLoad()
 
         username.text = GlobalData.shared.signedInAccount?.email
-        //booksList = BookAPIHelper.shared.fetchedBookData
-        getBookValues()
+        
+        setBookValues()
+        checkBookValues()
         
         collectionView1.delegate = self
         collectionView2.delegate = self
@@ -49,25 +50,42 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
 
     }
     
-    func getBookValues() {
+    func setBookValues() {
         booksList1 = BookAPIHelper.shared.getBookBySubject(subject: "Nonfiction")
         booksList2 = BookAPIHelper.shared.getBookBySubject(subject: "Fiction")
         
         booksList3 = []
-        var bookA = BookAPIHelper.BookModel(title: "Green Eggs and Ham", author_name: ["Dr. Suess"], subject: [], cover_edition_key: nil, cover_i: nil)
-        bookA.download_url = Bundle.main.path(forResource: "greeneggsham", ofType: "pdf")
-        bookA.thumbnail_url = Bundle.main.path(forResource: "greeneggsandham", ofType: "png")
-        var bookB = BookAPIHelper.BookModel(title: "Cinderella", author_name: [], subject: [], cover_edition_key: nil, cover_i: nil)
-        bookB.download_url = Bundle.main.path(forResource: "cinderella", ofType: "pdf")
-        bookB.thumbnail_url = Bundle.main.path(forResource: "princess", ofType: "png")
-        booksList3.append(bookA)
-        booksList3.append(bookB)
+        
+        let DLBookList = DLBookDBHelper.shared.getAllBooks()
+        for b in DLBookList {
+            var book = BookAPIHelper.BookModel(title: b.title, author_name: [], subject: [], cover_edition_key: nil, cover_i: nil)
+            book.download_url = Bundle.main.path(forResource: b.filename, ofType: b.fileextension)
+            book.thumbnail_url = Bundle.main.path(forResource: b.iconname, ofType: b.iconextension)
+            booksList3.append(book)
+        }
         
         booklist1SearchData = booksList1
         booklist2SearchData = booksList2
         booklist3SearchData = booksList3
     }
     
+    func reloadAllCollectionViews() {
+        collectionView1.reloadData()
+        collectionView2.reloadData()
+        collectionView3.reloadData()
+    }
+    
+    func checkBookValues() {
+        if BookAPIHelper.shared.fetchedBookData.isEmpty {
+            BookAPIHelper.shared.searchBooks()
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false) {_ in
+                self.checkBookValues()
+            }
+        } else if booksList1.isEmpty || booksList2.isEmpty {
+            setBookValues()
+            reloadAllCollectionViews()
+        }
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
  
@@ -295,9 +313,10 @@ extension BooksViewController: UISearchBarDelegate {
         booklist2SearchData = getFilteredData(searchText: searchText, bookArray: booksList2)
         booklist3SearchData = getFilteredData(searchText: searchText, bookArray: booksList3)
         
-        collectionView1.reloadData()
-        collectionView2.reloadData()
-        collectionView3.reloadData()
+        reloadAllCollectionViews()
+        //collectionView1.reloadData()
+        //collectionView2.reloadData()
+        //collectionView3.reloadData()
     }
     
     
