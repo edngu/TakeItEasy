@@ -90,9 +90,9 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
  
         if (segue.identifier == "bookSegue") {
-            let pageView = segue.destination as! BookPageViewController
+            let pageView = segue.destination as! BookViewController
             let book = sender as! BookAPIHelper.BookModel?
-            pageView.book = book
+            //pageView.book = book
         }
     }
     

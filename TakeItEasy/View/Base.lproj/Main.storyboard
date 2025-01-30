@@ -220,7 +220,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k7u-iK-2RE" userLabel="pdfView">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Mst-Ky-eyo"/>
@@ -236,7 +236,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eI7-dm-LXE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="361" y="2527"/>
+            <point key="canvasLocation" x="360" y="2498"/>
         </scene>
         <!--Books-->
         <scene sceneID="UUn-i7-yLz">
@@ -846,7 +846,7 @@
                         <outlet property="collectionView2" destination="cI0-UW-bBL" id="r83-gk-btL"/>
                         <outlet property="collectionView3" destination="NDu-AW-scf" id="T57-1K-iIG"/>
                         <outlet property="username" destination="PVR-vT-YoH" id="dfA-q4-PD5"/>
-                        <segue destination="fdW-2A-SRu" kind="show" identifier="bookSegue" id="BKR-cT-ENn"/>
+                        <segue destination="dsA-NP-Jap" kind="show" identifier="bookSegue" id="9Se-8f-n1O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vlU-ZD-fZn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1319,9 +1319,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tableCellBlueTextColor">
             <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
