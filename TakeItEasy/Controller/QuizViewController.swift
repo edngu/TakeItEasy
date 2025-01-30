@@ -27,22 +27,21 @@ class QuizViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         username.text = GlobalData.shared.signedInAccount?.email
-        //print(QuizDBHelper.shared.getAllQuizzes())
-        let quizzes = QuizDBHelper.shared.getAllQuizzes()
         
-        for quiz in quizzes {
-            guard let t = quiz.title else {
-                continue
+        DispatchQueue.main.async {
+        
+            let quizzes = QuizDBHelper.shared.getAllQuizzes()
+        
+            for quiz in quizzes {
+                guard let t = quiz.title else {
+                    continue
+                }
+                self.quizList.append(Quiz(title: t, iconFileName: quiz.iconfile!, questionSet: quiz.questions!))
             }
-            quizList.append(Quiz(title: t, iconFileName: quiz.iconfile!, questionSet: quiz.questions!))
+        
+            self.searchData = self.quizList
+            self.quizCollectionView.reloadData()
         }
-        
-        // Temporary, quiz wont show up if there is only 1 quiz
-        quizList.append(Quiz(title: "test1"))
-        //quizList.append(Quiz(title: "test2"))
-        //quizList.append(Quiz(title: "test3"))
-        
-        searchData = quizList
     }
     
     override func awakeFromNib() {
@@ -116,6 +115,11 @@ extension QuizViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "quizCell", for: indexPath) as! QuizCollectionViewCell
         cell.layer.cornerRadius = 30
         cell.quizTitle.text = searchData[indexPath.row].title
+        let image = searchData[indexPath.row].iconFileName
+        if let url = Bundle.main.path(forResource: image, ofType: nil) {
+            cell.quizImage.image = UIImage(named: url)
+        }
+        
         cell.quizBackDropView.layer.cornerRadius = 15
         return cell
     }
