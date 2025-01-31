@@ -445,7 +445,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <outlet property="delegate" destination="dEw-Yj-OI1" id="GUG-rI-a9r"/>
+                                    <outlet property="delegate" destination="iDP-f3-oFp" id="m1B-74-dub"/>
                                 </connections>
                             </searchBar>
                         </subviews>
