@@ -36,6 +36,11 @@ class RegistrationViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        resetTextFieldBorders()
+    }
+    
 
     func validateAccount(user: String, pwd: String, pwd2: String) -> AccountValidationResponse {
         
@@ -91,6 +96,22 @@ class RegistrationViewController: UIViewController {
     }
     
     
+    func resetTextFieldBorders() {
+        email.layer.borderColor = .none
+        email.layer.borderWidth = 0
+        password.layer.borderColor = .none
+        password.layer.borderWidth = 0
+        confirmPassword.layer.borderColor = .none
+        confirmPassword.layer.borderWidth = 0
+    }
+    
+    
+    func setErrorTextFieldBorder(textField: UITextField) {
+        textField.layer.borderColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
+        textField.layer.borderWidth = 1.0
+    }
+    
+    
     func saveKey(username: String, password: String) {
         let attributes: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -133,12 +154,38 @@ class RegistrationViewController: UIViewController {
     
     @IBAction func register(_ sender: Any) {
         
+        resetTextFieldBorders()
         let validationResponse = validateAccount(user: email.text!.lowercased(), pwd: password.text!, pwd2: confirmPassword.text!)
         
         errorLabel.isHidden = false
         errorLabel.text = validationResponse.rawValue
         
         guard validationResponse == AccountValidationResponse.valid else {
+            switch validationResponse {
+            case AccountValidationResponse.invalidUsernameFormat:
+                fallthrough
+            case AccountValidationResponse.usernameContainsSpace:
+                fallthrough
+            case AccountValidationResponse.usernameEmpty:
+                fallthrough
+            case AccountValidationResponse.usernameInUse:
+                setErrorTextFieldBorder(textField: email)
+            
+            case AccountValidationResponse.passwordNoCapital:
+                fallthrough
+            case AccountValidationResponse.passwordNoNumber:
+                fallthrough
+            case AccountValidationResponse.passwordNoSpecialCharacter:
+                fallthrough
+            case AccountValidationResponse.passwordNotLong:
+                setErrorTextFieldBorder(textField: password)
+                
+            case AccountValidationResponse.passwordNotMatching:
+                setErrorTextFieldBorder(textField: confirmPassword)
+            
+            default:
+                break
+            }
             return
         }
         
