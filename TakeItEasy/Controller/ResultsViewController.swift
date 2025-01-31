@@ -21,21 +21,28 @@ class ResultsViewController: UIViewController {
     var quiz : Quiz?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
         setLabels()
         username.text = GlobalData.shared.signedInAccount?.email
+       
     }
     
+    //Pop Navigation controller view twice when hitting the back button instead of only once.
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        if parent == nil {
+            if let navigationController = self.navigationController {
+                var viewControllers = navigationController.viewControllers
+                let viewControllersCount = viewControllers.count
+                if (viewControllersCount > 1) {
+                    viewControllers.remove(at: viewControllersCount - 1)
+                    navigationController.setViewControllers(viewControllers, animated:false)
+                }
+            }
+        }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
     
     func setupUI(){
         backdropView0.layer.cornerRadius = 30
