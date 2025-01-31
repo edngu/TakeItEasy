@@ -287,7 +287,7 @@ class QuizDBHelper {
         q7?.question = "Which keyword is used to handle exceptions in Swift?"
         q7?.answer = "catch"
         let q8 = NSEntityDescription.insertNewObject(forEntityName: "CDQuestion", into: context) as? CDQuestion
-        q8?.question = "Which operator allows you to provide a default value for an optioanl?"
+        q8?.question = "Which operator allows you to provide a default value for an optional?"
         q8?.answer = "??"
         
         

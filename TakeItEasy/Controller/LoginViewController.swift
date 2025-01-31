@@ -25,11 +25,12 @@ class LoginViewController: UIViewController {
         DBHelper.dbhelper.createNoteTable()
         DBHelper.dbhelper.alterAccountTable()
         BookAPIHelper.shared.searchBooks()
-        //QuizDBHelper.shared.deleteAllQuizzes()
-        //QuizDBHelper.shared.addMathQuiz()
-        //QuizDBHelper.shared.addSwiftQuiz()
-        //QuizDBHelper.shared.addVocabQuiz()
-        //DLBookDBHelper.shared.addInitialBooks()
+        QuizDBHelper.shared.deleteAllQuizzes()
+        QuizDBHelper.shared.addMathQuiz()
+        QuizDBHelper.shared.addSwiftQuiz()
+        QuizDBHelper.shared.addVocabQuiz()
+        DLBookDBHelper.shared.deleteAllBooks()
+        DLBookDBHelper.shared.addInitialBooks()
     }
     
     
