@@ -1242,6 +1242,7 @@
                         <outlet property="numCorrect" destination="Z8e-Fw-CPv" id="xzM-ec-5dS"/>
                         <outlet property="numPoints" destination="hjf-1v-9K0" id="9GR-6Q-Vkx"/>
                         <outlet property="numWrong" destination="WG1-J2-RUa" id="NAp-Rw-ju2"/>
+                        <outlet property="resultImage" destination="dp8-pa-hiu" id="6D3-TW-3ox"/>
                         <outlet property="username" destination="Vgx-Er-Xxh" id="Fr2-Da-sjJ"/>
                     </connections>
                 </viewController>
