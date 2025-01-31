@@ -64,6 +64,22 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
             booksList3.append(book)
         }
         
+        var tempList1 : [BookAPIHelper.BookModel] = []
+        for b in booksList1 {
+            if let url = b.thumbnail_url {
+                tempList1.append(b)
+            }
+        }
+        booksList1 = tempList1
+        
+        var tempList2 : [BookAPIHelper.BookModel] = []
+        for b in booksList2 {
+            if let url = b.thumbnail_url {
+                tempList2.append(b)
+            }
+        }
+        booksList2 = tempList2
+        
         booklist1SearchData = booksList1
         booklist2SearchData = booksList2
         booklist3SearchData = booksList3
