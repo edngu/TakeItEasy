@@ -233,6 +233,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KoM-fY-H3c"/>
+                    <connections>
+                        <outlet property="subView" destination="k7u-iK-2RE" id="t9s-Nd-kNs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eI7-dm-LXE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -442,7 +445,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <outlet property="delegate" destination="dEw-Yj-OI1" id="GUG-rI-a9r"/>
+                                    <outlet property="delegate" destination="iDP-f3-oFp" id="m1B-74-dub"/>
                                 </connections>
                             </searchBar>
                         </subviews>
