@@ -23,6 +23,7 @@ class QuizQuestion {
     }
     
     func generateResponseOptions() {
+        responseOptions = []
         var nums = [Int]()
         
         for i in 0..<fillerResponses.count {
