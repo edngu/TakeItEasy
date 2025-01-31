@@ -58,6 +58,10 @@ class Quiz {
             questions.remove(at: i)
         }
         
+        for q in questions {
+            q.generateResponseOptions()
+        }
+        
         questions = questions.shuffled()
         
     }
