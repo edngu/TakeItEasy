@@ -47,4 +47,18 @@ class DLBookDBHelper {
         addBook(title: "Cinderella", fileName: "cinderella", fileExtension: "pdf", iconName: "princess", iconExtension: "png")
     }
     
+    
+    func deleteAllBooks() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "DLBook")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch let error {
+            print("Error \(error)")
+        }
+        
+    }
+    
 }
