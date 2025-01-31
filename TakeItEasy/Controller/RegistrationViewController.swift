@@ -14,7 +14,7 @@ class RegistrationViewController: UIViewController {
     @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
     var emailText : String?
-    
+    let userDefault = UserDefaults.standard
     
     enum AccountValidationResponse : String {
         case valid = ""
@@ -152,6 +152,11 @@ class RegistrationViewController: UIViewController {
         saveKey(username: usernameLowercased, password: password)
     }
     
+    func removeRememberAccount() {
+        userDefault.set("", forKey: "username")
+        userDefault.set(false, forKey: "remember")
+    }
+    
     @IBAction func register(_ sender: Any) {
         
         resetTextFieldBorders()
@@ -192,6 +197,7 @@ class RegistrationViewController: UIViewController {
         saveAccount(username: email.text!, password: password.text!)
         //DBHelper.dbhelper.insertAccount(email: email.text!.lowercased() as NSString, password: password.text! as NSString)
         
+        removeRememberAccount()
         print("User created, data saved successfully")
         GlobalData.shared.signedInAccount = DBHelper.dbhelper.fetchAccountByEmail(email: email.text! as NSString)
         
