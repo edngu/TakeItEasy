@@ -50,7 +50,8 @@ class ResultsViewController: UIViewController {
                 }
             }
         }
-
+    }
+    
     func setImage(numCorrect: Int?) {
         guard let correct = numCorrect else {
             return
