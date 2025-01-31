@@ -20,11 +20,13 @@ class BookViewController: UIViewController {
 
         DispatchQueue.main.async {
             print("Loading Book")
-            if let resourseURL = self.book?.download_url {
-                if let document = PDFDocument(url: URL(string: resourseURL)!) {
+            if let resourceURL = self.book?.download_url {
+                if let document = PDFDocument(url: URL(string: resourceURL)!) {
                     self.pdfView.document = document
-                } else if let document = PDFDocument(url: Bundle.main.url(forResource: resourseURL, withExtension: "pdf")!) {
-                    self.pdfView.document = document
+                } else if let url = Bundle.main.url(forResource: resourceURL, withExtension: "pdf") {
+                    if let document = PDFDocument(url: url) {
+                        self.pdfView.document = document
+                    }
                 }
                 
                 self.pdfView.autoScales = true
