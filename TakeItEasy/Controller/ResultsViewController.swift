@@ -29,12 +29,27 @@ class ResultsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
         setLabels()
         setImage(numCorrect: quiz?.score)
         username.text = GlobalData.shared.signedInAccount?.email
+       
     }
     
+    //Pop Navigation controller view twice when hitting the back button instead of only once.
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        if parent == nil {
+            if let navigationController = self.navigationController {
+                var viewControllers = navigationController.viewControllers
+                let viewControllersCount = viewControllers.count
+                if (viewControllersCount > 1) {
+                    viewControllers.remove(at: viewControllersCount - 1)
+                    navigationController.setViewControllers(viewControllers, animated:false)
+                }
+            }
+        }
 
     func setImage(numCorrect: Int?) {
         guard let correct = numCorrect else {
@@ -54,6 +69,7 @@ class ResultsViewController: UIViewController {
         if let image = imageFile {
             resultImage.image = UIImage(named: image)
         }
+
     }
     
     func setupUI(){
