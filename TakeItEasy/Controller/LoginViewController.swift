@@ -120,7 +120,7 @@ class LoginViewController: UIViewController {
         
         guard validate(username: email.text!, password: password.text!) else {
             alertLabel.isHidden = false
-            print("Unable to login")
+            print("Invalid Email-Password Combination")
             return
         }
         
