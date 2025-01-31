@@ -59,7 +59,7 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
         let DLBookList = DLBookDBHelper.shared.getAllBooks()
         for b in DLBookList {
             var book = BookAPIHelper.BookModel(title: b.title, author_name: [], subject: [], cover_edition_key: nil, cover_i: nil)
-            book.download_url = Bundle.main.path(forResource: b.filename, ofType: b.fileextension)
+            book.download_url = b.filename//Bundle.main.path(forResource: b.filename, ofType: b.fileextension)
             book.thumbnail_url = Bundle.main.path(forResource: b.iconname, ofType: b.iconextension)
             booksList3.append(book)
         }
@@ -92,7 +92,7 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
         if (segue.identifier == "bookSegue") {
             let pageView = segue.destination as! BookViewController
             let book = sender as! BookAPIHelper.BookModel?
-            //pageView.book = book
+            pageView.book = book
         }
     }
     
