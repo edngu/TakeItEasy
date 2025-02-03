@@ -30,6 +30,7 @@ class BookAPIHelper {
     }
     
     var fetchedBookData : [BookModel] = []
+    var savedImageData = Dictionary<String, UIImage>()
     
     func searchBooks() {
         
@@ -134,7 +135,7 @@ class BookAPIHelper {
                         self.fetchedBookData.remove(at: i)
                     }
                     //self.openBookPDF(download_url: self.fetchedBookData[0].download_url!)
-                    
+                    self.getBookThumbnails()
                 }
                 
             } catch let error {
@@ -153,4 +154,28 @@ class BookAPIHelper {
         }
     }
     
+    
+    private func getBookThumbnails() {
+        
+        for b in fetchedBookData {
+            if let thumbnailURL = b.thumbnail_url, let thumbnail = URL(string: thumbnailURL) {
+                let session = URLSession(configuration: .default)
+                let downloadImageTask = session.dataTask(with: thumbnail) { data, response, error in
+                    if let error = error {
+                        print("Error getting thumbnail")
+                        return
+                    }
+                    
+                    if let imageData = data {
+                        DispatchQueue.main.async {
+                            let newImage = UIImage(data: imageData)
+                            self.savedImageData[thumbnailURL] = newImage
+                        }
+                    }
+                }
+                downloadImageTask.resume()
+            }
+        }
+    }
 }
+
