@@ -19,7 +19,7 @@ class CustomTabBarController: UITabBarController {
     func createRoundCornerTabBar() {
         let layer = CAShapeLayer()
         
-        layer.path = UIBezierPath(roundedRect: CGRect(x: 10, y: self.tabBar.bounds.minY + 2, width: self.tabBar.bounds.width - 20, height: self.tabBar.bounds.height + 10), cornerRadius: 30).cgPath
+        layer.path = UIBezierPath(roundedRect: CGRect(x: 4, y: self.tabBar.bounds.minY + 2, width: self.tabBar.bounds.width - 8, height: self.tabBar.bounds.height + 10), cornerRadius: 30).cgPath
         layer.borderWidth = 1.0
         layer.opacity = 1.0
         layer.isHidden = false

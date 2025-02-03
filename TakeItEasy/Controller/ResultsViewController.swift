@@ -77,6 +77,7 @@ class ResultsViewController: UIViewController {
         backdropView0.layer.cornerRadius = 30
         backdropView1.layer.cornerRadius = 30
         backdropView2.layer.cornerRadius = 30
+        self.navigationItem.backButtonTitle = "Quizzes"
 
     }
     
