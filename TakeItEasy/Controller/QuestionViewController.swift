@@ -8,7 +8,7 @@
 import UIKit
 
 class QuestionViewController: UIViewController {
-
+    
     @IBOutlet weak var backDropView: UIView!
     @IBOutlet weak var questionButton1: UIButton!
     @IBOutlet weak var questionButton2: UIButton!
@@ -27,11 +27,33 @@ class QuestionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         username.text = GlobalData.shared.signedInAccount?.email
-        backDropView.layer.cornerRadius = 30
-        
         changeQuestion()
+        setupUI()
+
     }
     
+    @objc func customBackAction() {
+        let alert = UIAlertController(title: "Warning!", message: "Are you sure you want to go back and delete your responses?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+           
+            self.navigationController?.popViewController(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
+    func setupUI(){
+        backDropView.layer.cornerRadius = 30
+        let backButton = UIBarButtonItem(title: "Quizzes", style: .plain, target: self, action: #selector(customBackAction))
+                navigationItem.leftBarButtonItem = backButton
+//        let backButtonImage = UIImage(systemName: "chevron.left")
+//        backButton.image = backButtonImage
+//        backButton.imageInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+//
+//        navigationItem.leftBarButtonItem = backButton
+    }
+
     
     func changeQuestion() {
         
@@ -62,13 +84,13 @@ class QuestionViewController: UIViewController {
         
         switch selectedButton {
             case 0:
-                questionButton1.configuration?.baseBackgroundColor = .medium
+                questionButton1.configuration?.baseBackgroundColor = .highlightedButton
             case 1:
-                questionButton2.configuration?.baseBackgroundColor = .medium
+                questionButton2.configuration?.baseBackgroundColor = .highlightedButton
             case 2:
-                questionButton3.configuration?.baseBackgroundColor = .medium
+            questionButton3.configuration?.baseBackgroundColor = .highlightedButton
             case 3:
-                questionButton4.configuration?.baseBackgroundColor = .medium
+                questionButton4.configuration?.baseBackgroundColor = .highlightedButton
             default:
                 break
         }
