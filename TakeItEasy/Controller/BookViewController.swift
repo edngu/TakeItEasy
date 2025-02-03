@@ -17,6 +17,7 @@ class BookViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = GlobalData.shared.signedInAccount?.email
 
         DispatchQueue.main.async {
             print("Loading Book")

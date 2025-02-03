@@ -113,6 +113,7 @@ class QuestionViewController: UIViewController {
             GlobalData.shared.signedInAccount?.quizTotalScore = newScore
             GlobalData.shared.signedInAccount?.points = newPoints
         }
+        navigationItem.title = "Quizzes"
         self.performSegue(withIdentifier: "resultsSegue", sender: quiz)
     }
     

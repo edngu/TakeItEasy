@@ -11,11 +11,12 @@ import WebKit
 class SearchViewController: UIViewController {
     
     @IBOutlet weak var viewContainer: UIView!
+    @IBOutlet weak var username: UILabel!
     var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationItem.title = GlobalData.shared.signedInAccount?.email
         createBrowser()
     }
     
@@ -32,8 +33,16 @@ class SearchViewController: UIViewController {
         webView.load(URLRequest(url: url!))
         
         webView.frame = viewContainer.bounds
+        //webView.scrollView.contentInsetAdjustmentBehavior = .automatic
         viewContainer.addSubview(webView)
-
+        
     }
-
+    @IBAction func logOut(_ sender: Any) {
+        if let vcA = self.storyboard?.instantiateViewController(withIdentifier: "logincontroller") as? LoginViewController {
+            
+            self.view.window?.rootViewController = vcA
+            self.view.window?.makeKeyAndVisible()
+        }
+    }
+    
 }
