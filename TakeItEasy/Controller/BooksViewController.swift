@@ -23,6 +23,8 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
     var booklist2SearchData : [BookAPIHelper.BookModel] = []
     var booklist3SearchData : [BookAPIHelper.BookModel] = []
     
+    var savedImageData = Dictionary<String, UIImage>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -79,6 +81,8 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
             }
         }
         booksList2 = tempList2
+        
+        savedImageData = BookAPIHelper.shared.savedImageData//Dictionary<String, UIImage>()
         
         booklist1SearchData = booksList1
         booklist2SearchData = booksList2
@@ -155,22 +159,29 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
             cell1.layer.cornerRadius = 30
             cell1.bookBackdropView.layer.cornerRadius = 15
             
-            if let thumbnailURL = booklist1SearchData[indexPath.row].thumbnail_url, let thumbnail = URL(string: thumbnailURL) {
-                let session = URLSession(configuration: .default)
-            
-                let downloadImageTask = session.dataTask(with: thumbnail) { data, response, error in
-                    if let error = error {
-                        print("Error getting thumbnail")
-                        return
-                    }
-            
-                    if let imageData = data {
-                        DispatchQueue.main.async {
-                            cell1.bookImage.image = UIImage(data: imageData)
+            let bookThumbnail = booklist1SearchData[indexPath.row].thumbnail_url
+            if bookThumbnail != nil && savedImageData.keys.contains(bookThumbnail!) {
+                cell1.bookImage.image = savedImageData[bookThumbnail!]
+            } else {
+                if let thumbnailURL = booklist1SearchData[indexPath.row].thumbnail_url, let thumbnail = URL(string: thumbnailURL) {
+                    let session = URLSession(configuration: .default)
+
+                    let downloadImageTask = session.dataTask(with: thumbnail) { data, response, error in
+                        if let error = error {
+                            print("Error getting thumbnail")
+                            return
+                        }
+                        
+                        if let imageData = data {
+                            DispatchQueue.main.async {
+                                let newImage = UIImage(data: imageData)
+                                cell1.bookImage.image = newImage
+                                self.savedImageData[thumbnailURL] = newImage
+                            }
                         }
                     }
+                    downloadImageTask.resume()
                 }
-                downloadImageTask.resume()
             }
             return cell1
         } else if collectionView == self.collectionView2 {
@@ -178,23 +189,31 @@ class BooksViewController: UIViewController, UICollectionViewDataSource, UIColle
             cell2.bookTitleLabel?.text = booklist2SearchData[indexPath.row].title
             cell2.layer.cornerRadius = 30
             cell2.bookBackdropView.layer.cornerRadius = 15
-            
-            if let thumbnailURL = booklist2SearchData[indexPath.row].thumbnail_url, let thumbnail = URL(string: thumbnailURL) {
-                let session = URLSession(configuration: .default)
-            
-                let downloadImageTask = session.dataTask(with: thumbnail) { data, response, error in
-                    if let error = error {
-                        print("Error getting thumbnail")
-                        return
-                    }
-            
-                    if let imageData = data {
-                        DispatchQueue.main.async {
-                            cell2.bookImage.image = UIImage(data: imageData)
+
+            let bookThumbnail = booklist2SearchData[indexPath.row].thumbnail_url
+            if bookThumbnail != nil && savedImageData.keys.contains(bookThumbnail!) {
+                cell2.bookImage.image = savedImageData[bookThumbnail!]
+            } else {
+                
+                if let thumbnailURL = booklist2SearchData[indexPath.row].thumbnail_url, let thumbnail = URL(string: thumbnailURL) {
+                    let session = URLSession(configuration: .default)
+
+                    let downloadImageTask = session.dataTask(with: thumbnail) { data, response, error in
+                        if let error = error {
+                            print("Error getting thumbnail")
+                            return
+                        }
+                        
+                        if let imageData = data {
+                            DispatchQueue.main.async {
+                                let newImage = UIImage(data: imageData)
+                                cell2.bookImage.image = newImage
+                                self.savedImageData[thumbnailURL] = newImage
+                            }
                         }
                     }
+                    downloadImageTask.resume()
                 }
-                downloadImageTask.resume()
             }
             return cell2
         } else {
