@@ -49,6 +49,8 @@ class NotesViewController: UIViewController{
             notesList.insert(note!, at: 0)
             searchData = notesList
             tableView.reloadData()
+            
+            self.performSegue(withIdentifier: "noteSegue", sender: searchData[0])
         }
     }
     
@@ -80,7 +82,17 @@ extension NotesViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            DBHelper.dbhelper.deleteNote(id: notesList[indexPath.section].id!)
+            guard let id = notesList[indexPath.section].id else {
+                return
+            }
+            DBHelper.dbhelper.deleteNote(id: id)
+            
+            for i in 0..<notesList.count {
+                if notesList[i].id == id {
+                    notesList.remove(at: i)
+                    break
+                }
+            }
             searchData.remove(at: indexPath.section)
             tableView.deleteSections([indexPath.section], with: .fade)
         }
