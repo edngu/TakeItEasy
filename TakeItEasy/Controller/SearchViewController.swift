@@ -29,7 +29,7 @@ class SearchViewController: UIViewController {
     func createBrowser() {
         webView = WKWebView()
         
-        let url = URL(string: "https://www.google.com")
+        let url = URL(string: "https://www.duckduckgo.com")
         webView.load(URLRequest(url: url!))
         
         webView.frame = viewContainer.bounds
